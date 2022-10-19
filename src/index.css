@@ -286,9 +286,10 @@ margin: 20px 0 30px;
   height: 30px;
 }
 
-/* .list-message{
+.list-message{
   overflow-y: scroll;
-} */
+  height: 360px;
+}
 
 .list-hr{
   margin-bottom: 50px;
@@ -308,3 +309,6 @@ margin: 20px 0 30px;
 /* .friend:hover{
   background-color: red;
 } */
+
+/* MESSAGE-1 */
+

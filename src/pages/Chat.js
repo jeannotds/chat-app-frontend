@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import profil from '../images/Jeannot.jpeg'
 import axios from 'axios'
 import Conversation from "../components/Conversation"
-
+import Message from "../components/Message"
 
 
 const Chat = () => {
@@ -34,18 +34,14 @@ const Chat = () => {
                     </div>
                     <hr className="list-hr"></hr>
                     <div className="list-message">
-                    <div className="blog-msg-left">
-                            <div className="left">
-                                <span className="my-msge-sended" >Salut!</span>
-                                <div className="date">Date</div>
-                            </div>
-                    </div>
-                        <div className="blog-msg-right">
-                            <div className="right">
-                                <span className="my-msge-sended ">comment tu vas ?</span>
-                                <div className="date">Date</div>
-                            </div>
-                        </div>                 
+                        <Message />
+                        <Message own={true} />
+                        <Message own={true} />
+                        <Message />
+                        <Message own={true} />
+                        <Message />
+                        <Message own={true} />
+                        <Message />
                     </div>
                     
                     <form className="form">
