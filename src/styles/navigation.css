@@ -1,0 +1,14 @@
+.navigation{
+    display: flex;
+    justify-content: space-between;
+}
+
+.routes{
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-link {
+    padding: 10px;
+}
+
