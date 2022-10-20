@@ -21,7 +21,7 @@ const Login = () => {
                 Authorization: token
             }
         }).then(res => {
-            console.log(res)
+            // console.log(res)
             navigate('/chat')
         }).catch(err => {
             console.log(err)
@@ -34,7 +34,7 @@ const Login = () => {
         console.log(email, password)
         axios.post("http://localhost:3005/api/auth/login", {email, password})
         .then(user => {
-            console.log(user)
+            // console.log(user)
             localStorage.setItem("token", user.data.token)
             navigate('/chat')
         })

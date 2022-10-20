@@ -1,13 +1,29 @@
-import React from "react"
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from "react"
 import profil from '../images/Jeannot.jpeg'
-import axios from 'axios'
 import Conversation from "../components/Conversation"
 import Message from "../components/Message"
 
 
 const Chat = () => {
+
+    const {user} = useSelector((state) => state.authReducer.authData)
+
+    const [ chats, setChats ] = useState([])
+    
+
+    useEffect(() => {
+        const getChats = async() => {
+            
+            try{
+                const { data } = await userChats(user._id)
+            }
+            catch(error) {
+                console.log(error)
+            }
+
+        }
+    })
+
 
 
     return(
@@ -19,7 +35,11 @@ const Chat = () => {
                         </div>
                         <div className="recent">
                             <input type="text" placeholder="Search"  className='search'/>
-                            <Conversation />
+                            <h4>Recent</h4>
+                           
+                                <Conversation />
+                              
+                            
                         </div>
                     </div>
                 </div>
@@ -56,3 +76,37 @@ const Chat = () => {
 }
 
 export default Chat
+
+
+
+// useEffect(() => {
+  
+//     const getUsers = async()=>{
+//         try {
+//             const response=await axios.get("http://localhost:3005/api/chat/"+user._id)
+//             console.log("message", response.data)
+//         } catch (error) {
+//            console.log(error) 
+//         }
+//     }
+//     getUsers()
+// }, [])
+
+
+    
+    // console.log("USER : ", user)
+
+//     const [ chat, setChat ] = useState([])
+
+//     useEffect(() => {
+//         const getUsers = async()=>{
+//             try {
+//                 const response=await axios.get(`http://localhost:3005/api/chat/${user._id}`)
+//                 // console.log(response.data)
+//                 setChat(response.data)
+//             } catch (error) {
+//             console.log(error) 
+//             }
+//         }
+//         getUsers()
+// }, [])
