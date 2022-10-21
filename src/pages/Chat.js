@@ -7,25 +7,23 @@ import { userChats } from "../api/ChatRequests"
 
 const Chat = () => {
 
+    const [ listeUser, setListeUser ] = useState({})
     const [ chats , setChat ] = useState([])
 
-    
-    const user = JSON.parse(localStorage.getItem("user"))
+    const showMessage = (listUsers) => {
+        setListeUser(listUsers)
+    }
 
-    console.log("MY USERS", user)
+    const user = JSON.parse(localStorage.getItem("user"))
    
    useEffect(() => {
 
-    console.log("myUser : ", user)
-
-    console.log("USER ID : ", user._id)
-
         const getChats = async() => {
             try{
-                const { data } = await axios.get(`http://localhost:3005/chat/${user._id}`)
+                const { data } = await axios.get(`http://localhost:3005/auth/user/${user._id}`)
                 console.log("My RESPONSE : ", data)
                 setChat(data)
-            }   
+            }
             catch(err) {
                 console.log(err)
             }
@@ -43,13 +41,24 @@ const Chat = () => {
                         <div className="recent">
                             <input type="text" placeholder="Search"  className='search'/>
                             <h4>Recent</h4>
-
-                                { chats.map((chat) => (
-                                    <div key={chat._id}>
-                                        <Conversation data={chat} currentUserId={user._id}/>
-                                    </div>
-                                )) }
-
+                            <div className='recent-down'>
+                                {chats?.user?.map((listUsers) => (
+                                        <div className='friend' key={listUsers._id}  onClick={()=>showMessage(listUsers)}>
+                                            <div className='my-friend' >
+                                                <img src={profil} alt="profil" title="profil" className='profil-recent' />
+                                                    <div className='name-friend'>
+                                                        <span className='name'>
+                                                            {listUsers.name}
+                                                        </span>
+                                                    <div className='alert-msg'>Last message</div>
+                                                </div>
+                                            </div>
+                                            <div className='container-hr'>
+                                                <div className='hr'></div>
+                                            </div>
+                                        </div>    
+                                ))}    
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -58,7 +67,7 @@ const Chat = () => {
                     <div className="my-image">
                         <img src={profil} alt="profil" title="profil" className='my_profil_msg' />
                         <div className="Online">
-                            <div className="online-name">Jeannot</div>
+                            <div className="online-name">{listeUser.name}</div>
                             <div className="if-online">Online</div>
                         </div>
                     </div>
