@@ -44,7 +44,10 @@ const Login = ({user, setUser}) => {
             console.log("uusseur",user.data.user)
             navigate('/chat')
             setUser(user)
-            localStorage.setItem("user", user.data.user._id)
+            localStorage.setItem('user', JSON.stringify(user.data.user))
+            // localStorage.setItem('testObject', JSON.stringify(testObject));
+
+
         })
         .catch(err => {
             console.log(err)

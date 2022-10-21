@@ -5,24 +5,24 @@ import Message from '../components/Message'
 import axios from "axios"
 import { userChats } from "../api/ChatRequests"
 
-const Chat = ({user}) => {
+const Chat = () => {
 
     const [ chats , setChat ] = useState([])
 
-    console.log("USERS : ", user)
     
-    const userId = localStorage.getItem("user")
+    const user = JSON.parse(localStorage.getItem("user"))
 
+    console.log("MY USERS", user)
    
    useEffect(() => {
 
-    console.log("userId : ", userId)
-    
-    console.log("USER ID : ", userId)
+    console.log("myUser : ", user)
+
+    console.log("USER ID : ", user._id)
 
         const getChats = async() => {
             try{
-                const { data } = await axios.get(`http://localhost:3005/chat/${userId}`)
+                const { data } = await axios.get(`http://localhost:3005/chat/${user._id}`)
                 console.log("My RESPONSE : ", data)
                 setChat(data)
             }   
@@ -31,7 +31,7 @@ const Chat = ({user}) => {
             }
         }
         getChats()
-   }, [user])
+   }, [user._id])
 
     return(
        <div className="chat">
@@ -46,7 +46,7 @@ const Chat = ({user}) => {
 
                                 { chats.map((chat) => (
                                     <div key={chat._id}>
-                                        <Conversation data={chat} currentUserId={userId}/>
+                                        <Conversation data={chat} currentUserId={user._id}/>
                                     </div>
                                 )) }
 
