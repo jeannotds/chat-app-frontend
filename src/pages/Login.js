@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import userContext from "./userContext";
 
 
-const Login = ({setUser}) => {
+const Login = ({user, setUser}) => {
 
     // const { setUser } = useContext(userContext);
 
@@ -19,6 +19,7 @@ const Login = ({setUser}) => {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
+        const user = localStorage.getItem('user')
         axios.get('http://localhost:3005/auth/protected', {
             headers : {
                 Authorization: token
@@ -39,8 +40,11 @@ const Login = ({setUser}) => {
         .then(user => {
             // console.log(user)
             localStorage.setItem("token", user.data.token)
+            const data = user.data.user
+            console.log("uusseur",user.data.user)
             navigate('/chat')
             setUser(user)
+            localStorage.setItem("user", user.data.user._id)
         })
         .catch(err => {
             console.log(err)

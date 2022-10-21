@@ -5,7 +5,32 @@ import Message from '../components/Message'
 import axios from "axios"
 import { userChats } from "../api/ChatRequests"
 
-const Chat = () => {
+const Chat = ({user}) => {
+
+
+
+   const [ chats , setChat ] = useState([])
+
+   useEffect(() => {
+
+    // console.log("USER ID : ", user.data.user._id)
+    const userId = localStorage.getItem("user")
+
+        const getConversation = async() => {
+            try{
+                const response = await  axios.get("http://localhost:3005/chat/"+userId)
+                // console.log("My Response", (await response))
+                console.log("My Response", response.data)
+
+                
+                
+            }   
+            catch(err) {
+                console.log(err)
+            }
+        }
+        getConversation()
+   }, [user])
 
 
 
