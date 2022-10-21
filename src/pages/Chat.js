@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from "react"
 import profil from '../images/Jeannot.jpeg'
 import Conversation from "../components/Conversation"
-import Message from "../components/Message"
-
+import Message from '../components/Message'
+import axios from "axios"
 
 const Chat = () => {
 
-    const {user} = useSelector((state) => state.authReducer.authData)
 
-    const [ chats, setChats ] = useState([])
-    
+        const [ user, setuser ] = useState([])
 
-    useEffect(() => {
-        const getChats = async() => {
-            
-            try{
-                const { data } = await userChats(user._id)
+        useEffect(() => {
+            const getUsers = async()=>{
+                try {
+                    const response=await axios.get("http://localhost:3005/chat/")
+                    setuser(response.data)
+                    console.log(response.data)
+                } catch (error) {
+                console.log(error) 
+                }
             }
-            catch(error) {
-                console.log(error)
-            }
-
-        }
-    })
-
-
+            getUsers()
+        }, [])
 
     return(
        <div className="chat">
@@ -37,7 +33,7 @@ const Chat = () => {
                             <input type="text" placeholder="Search"  className='search'/>
                             <h4>Recent</h4>
                            
-                                <Conversation />
+                                <Conversation user={user} />
                               
                             
                         </div>
@@ -79,18 +75,19 @@ export default Chat
 
 
 
-// useEffect(() => {
-  
-//     const getUsers = async()=>{
-//         try {
-//             const response=await axios.get("http://localhost:3005/api/chat/"+user._id)
-//             console.log("message", response.data)
-//         } catch (error) {
-//            console.log(error) 
-//         }
-//     }
-//     getUsers()
-// }, [])
+    // const [ user, setuser ] = useState([])
+
+    // useEffect(() => {
+    //     const getUsers = async()=>{
+    //         try {
+    //             const response=await axios.get("http://localhost:3005/api/auth/")
+    //             setuser(response.data)
+    //         } catch (error) {
+    //         console.log(error) 
+    //         }
+    //     }
+    //     getUsers()
+    // }, [])
 
 
     
@@ -110,3 +107,18 @@ export default Chat
 //         }
 //         getUsers()
 // }, [])
+
+
+// const getChats = async() => {
+            
+//     try{
+//         // const { data } = await userChats(user._id)
+//         const { data } = await userChats()
+//         setChats(data)
+//     }
+//     catch(error) {
+//         console.log(error)
+//     }
+
+// }
+// getChats()

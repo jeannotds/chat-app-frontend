@@ -16,7 +16,7 @@ const Login = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-        axios.get('http://localhost:3005/api/auth/protected', {
+        axios.get('http://localhost:3005/auth/protected', {
             headers : {
                 Authorization: token
             }
@@ -32,7 +32,7 @@ const Login = () => {
     const submit = (e) => {
         e.preventDefault()
         console.log(email, password)
-        axios.post("http://localhost:3005/api/auth/login", {email, password})
+        axios.post("http://localhost:3005/auth/login", {email, password})
         .then(user => {
             // console.log(user)
             localStorage.setItem("token", user.data.token)
