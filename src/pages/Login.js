@@ -1,14 +1,17 @@
 import { Button,  Row, Form, Col, Container } from "react-bootstrap"
 
 import '../styles/login.css'
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from 'react';
 import axios  from "axios";
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import userContext from "./userContext";
 
 
-const Login = () => {
+const Login = ({setUser}) => {
+
+    // const { setUser } = useContext(userContext);
 
     let navigate = useNavigate()
     const [email, setEmail] = useState('')
@@ -37,6 +40,7 @@ const Login = () => {
             // console.log(user)
             localStorage.setItem("token", user.data.token)
             navigate('/chat')
+            setUser(user)
         })
         .catch(err => {
             console.log(err)

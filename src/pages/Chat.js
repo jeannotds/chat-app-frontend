@@ -3,24 +3,28 @@ import profil from '../images/Jeannot.jpeg'
 import Conversation from "../components/Conversation"
 import Message from '../components/Message'
 import axios from "axios"
+import { userChats } from "../api/ChatRequests"
 
 const Chat = () => {
 
 
-        const [ user, setuser ] = useState([])
 
-        useEffect(() => {
-            const getUsers = async()=>{
-                try {
-                    const response=await axios.get("http://localhost:3005/chat/")
-                    setuser(response.data)
-                    console.log(response.data)
-                } catch (error) {
-                console.log(error) 
-                }
-            }
-            getUsers()
-        }, [])
+
+
+        // const [ user, setuser ] = useState([])
+
+        // useEffect(() => {
+        //     const getUsers = async()=>{
+        //         try {
+        //             // const {data} = await userChats(user._id)
+        //             // setuser(response.data)
+        //             // console.log(response.data)
+        //         } catch (error) {
+        //         console.log(error) 
+        //         }
+        //     }
+        //     getUsers()
+        // }, [])
 
     return(
        <div className="chat">
@@ -33,7 +37,7 @@ const Chat = () => {
                             <input type="text" placeholder="Search"  className='search'/>
                             <h4>Recent</h4>
                            
-                                <Conversation user={user} />
+                                <Conversation/>
                               
                             
                         </div>

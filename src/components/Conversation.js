@@ -4,11 +4,11 @@ import profil from '../images/Jeannot.jpeg'
 
 
 
-function Conversation({ user }) {
+function Conversation() {
 
   return (
     <div className='recent-down'>
-              {user.map((list) => (
+              {/* {user.map((list) => (
                 <div className='friend' key={list._id}>
                     <div className='my-friend' >
                         <img src={profil} alt="profil" title="profil" className='profil-recent' />
@@ -22,8 +22,8 @@ function Conversation({ user }) {
                     <div className='container-hr'>
                         <div className='hr'></div>
                     </div>
-              </div>
-        ))} 
+              </div> */}
+        {/* ))}  */}
                             
     </div>
   )
