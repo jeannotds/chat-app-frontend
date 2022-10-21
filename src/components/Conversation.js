@@ -1,13 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import profil from '../images/Jeannot.jpeg'
 
 
 
 
-function Conversation() {
+function Conversation({ data, currentUserId }) {
+
+    const [ userData, setuserData ] = useState(null)
+    console.log("MEMBERS : ", data.members)
+    console.log("currentUserId", currentUserId)
+    const userId = data.members.find((id) => id!==currentUserId)
+
+    // const UserId = data.member
+
+    useEffect(() => {
+        const getUserData = async () => {
+            
+        }
+    })
+
 
   return (
     <div className='recent-down'>
+
+
+
               {/* {user.map((list) => (
                 <div className='friend' key={list._id}>
                     <div className='my-friend' >
@@ -22,8 +39,8 @@ function Conversation() {
                     <div className='container-hr'>
                         <div className='hr'></div>
                     </div>
-              </div> */}
-        {/* ))}  */}
+              </div> 
+        ))}  */}
                             
     </div>
   )

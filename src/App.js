@@ -10,24 +10,7 @@ import axios from 'axios';
 function App() {
 
   const [user, setUser] = useState({})
-  // console.log("Mon user ", user)
-  // const userdata = user?.data?.user?._id;
-  // // console.log("user APP", userdata)
-
-  // useEffect(()=>{
-  //   const userId = localStorage.getItem("user")
-
-  //   axios.get(`http://localhost:3005/http://localhost:3005/auth/user/${userdata}`)
-  //   .then((user)=>{
-  //     setUser(user)
-  //     console.log("RENDU !!!")
-  //   }).catch((error)=>{
-  //     console.log(error)
-  //   })
-  //   console.log("user APP", userdata)
-
-  // },[user, userdata])
-
+  
   return (
    
        <BrowserRouter>

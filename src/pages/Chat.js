@@ -7,49 +7,31 @@ import { userChats } from "../api/ChatRequests"
 
 const Chat = ({user}) => {
 
+    const [ chats , setChat ] = useState([])
 
-
-   const [ chats , setChat ] = useState([])
-
-   useEffect(() => {
-
-    // console.log("USER ID : ", user.data.user._id)
+    console.log("USERS : ", user)
+    
     const userId = localStorage.getItem("user")
 
-        const getConversation = async() => {
-            try{
-                const response = await  axios.get("http://localhost:3005/chat/"+userId)
-                // console.log("My Response", (await response))
-                console.log("My Response", response.data)
+   
+   useEffect(() => {
 
-                
-                
+    console.log("userId : ", userId)
+    
+    console.log("USER ID : ", userId)
+
+        const getChats = async() => {
+            try{
+                const { data } = await axios.get(`http://localhost:3005/chat/${userId}`)
+                console.log("My RESPONSE : ", data)
+                setChat(data)
             }   
             catch(err) {
                 console.log(err)
             }
         }
-        getConversation()
+        getChats()
    }, [user])
-
-
-
-
-
-        // const [ user, setuser ] = useState([])
-
-        // useEffect(() => {
-        //     const getUsers = async()=>{
-        //         try {
-        //             // const {data} = await userChats(user._id)
-        //             // setuser(response.data)
-        //             // console.log(response.data)
-        //         } catch (error) {
-        //         console.log(error) 
-        //         }
-        //     }
-        //     getUsers()
-        // }, [])
 
     return(
        <div className="chat">
@@ -61,10 +43,13 @@ const Chat = ({user}) => {
                         <div className="recent">
                             <input type="text" placeholder="Search"  className='search'/>
                             <h4>Recent</h4>
-                           
-                                <Conversation/>
-                              
-                            
+
+                                { chats.map((chat) => (
+                                    <div key={chat._id}>
+                                        <Conversation data={chat} currentUserId={userId}/>
+                                    </div>
+                                )) }
+
                         </div>
                     </div>
                 </div>
