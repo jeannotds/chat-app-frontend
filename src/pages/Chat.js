@@ -9,9 +9,11 @@ const Chat = () => {
 
     const [ listeUser, setListeUser ] = useState({})
     const [ chats , setChat ] = useState([])
+    const [ messages, setMessages ] = useState([])
 
-    const showMessage = (listUsers) => {
+    const showUser = (listUsers) => {
         setListeUser(listUsers)
+        setMessages("comment")
     }
 
     const user = JSON.parse(localStorage.getItem("user"))
@@ -31,6 +33,23 @@ const Chat = () => {
         getChats()
    }, [user._id])
 
+
+   useEffect(() => {
+        const getMessages = async() => {
+            try{
+                const {message} = await axios.get(`http://localhost:3005/chat/${user._id}`)
+                console.log("MY MESSAGE", message)
+            }
+            catch(error) {
+                console.log(error)
+            }
+        }
+        getMessages()
+
+   }, [])
+
+
+
     return(
        <div className="chat">
             <div className="sidebar">
@@ -43,7 +62,7 @@ const Chat = () => {
                             <h4>Recent</h4>
                             <div className='recent-down'>
                                 {chats?.user?.map((listUsers) => (
-                                        <div className='friend' key={listUsers._id}  onClick={()=>showMessage(listUsers)}>
+                                        <div className='friend' key={listUsers._id}  onClick={()=>showUser(listUsers)}>
                                             <div className='my-friend' >
                                                 <img src={profil} alt="profil" title="profil" className='profil-recent' />
                                                     <div className='name-friend'>
@@ -73,14 +92,16 @@ const Chat = () => {
                     </div>
                     <hr className="list-hr"></hr>
                     <div className="list-message">
+                        {/* {messages} */}
                         <Message />
-                        <Message own={true} />
-                        <Message own={true} />
-                        <Message />
-                        <Message own={true} />
-                        <Message />
-                        <Message own={true} />
-                        <Message />
+                            <Message own={true} messages={messages} />
+                            {/* <Message own={true} /> */}
+                            <Message />
+                            {/* <Message own={true} />
+                            <Message />
+                            <Message own={true} />
+                            <Message /> */}
+                       
                     </div>
                     
                     <form className="form">
