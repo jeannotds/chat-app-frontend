@@ -9,6 +9,7 @@ const Chat = () => {
 
     const [ listeUser, setListeUser ] = useState({})
     const [ chats , setChat ] = useState([])
+    const [ users , setUsers ] = useState([])
     const [ messages, setMessages ] = useState([])
 
     const showUser = (listUsers) => {
@@ -24,7 +25,7 @@ const Chat = () => {
             try{
                 const { data } = await axios.get(`http://localhost:3005/auth/user/${user._id}`)
                 console.log("My RESPONSE : ", data)
-                setChat(data)
+                setUsers(data)
             }
             catch(err) {
                 console.log(err)
@@ -33,12 +34,12 @@ const Chat = () => {
         getChats()
    }, [user._id])
 
-
    useEffect(() => {
         const getMessages = async() => {
             try{
-                const {message} = await axios.get(`http://localhost:3005/chat/${user._id}`)
-                console.log("MY MESSAGE", message)
+                const allMessage = await axios.get(`http://localhost:3005/chat/${user._id}`)
+                console.log("allMessageSender", allMessage)
+                setChat(allMessage) //setConversation
             }
             catch(error) {
                 console.log(error)
@@ -46,8 +47,7 @@ const Chat = () => {
         }
         getMessages()
 
-   }, [])
-
+   }, [user._id])
 
 
     return(
@@ -61,7 +61,7 @@ const Chat = () => {
                             <input type="text" placeholder="Search"  className='search'/>
                             <h4>Recent</h4>
                             <div className='recent-down'>
-                                {chats?.user?.map((listUsers) => (
+                                {users?.user?.map((listUsers) => (
                                         <div className='friend' key={listUsers._id}  onClick={()=>showUser(listUsers)}>
                                             <div className='my-friend' >
                                                 <img src={profil} alt="profil" title="profil" className='profil-recent' />
@@ -92,24 +92,15 @@ const Chat = () => {
                     </div>
                     <hr className="list-hr"></hr>
                     <div className="list-message">
-                        {/* {messages} */}
-                        <Message />
-                            <Message own={true} messages={messages} />
-                            {/* <Message own={true} /> */}
-                            <Message />
-                            {/* <Message own={true} />
-                            <Message />
                             <Message own={true} />
-                            <Message /> */}
-                       
+                            <Message />
                     </div>
-                    
                     <form className="form">
                         <hr></hr>
                         <input type="text" placeholder=""/>
                         <button>send</button>
                     </form>
-                </div>
+                </div> 
             </div>
        </div>
     )
