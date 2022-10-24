@@ -15,7 +15,8 @@ const Chat = () => {
 
     const showUser = (listUsers) => {
         setListeUser(listUsers)
-        setMessages("comment")
+        // setMessages("comment")
+        setCurrentChat(listUsers)
     }
     //Id User
     const user = JSON.parse(localStorage.getItem("user"))
@@ -42,7 +43,7 @@ const Chat = () => {
             try{
                 const allMessage = await axios.get(`http://localhost:3005/chat/${user._id}`)
                 console.log("chat/user : ", allMessage)
-                setChat(allMessage) //setConversation
+                setChat("allMessage", allMessage) //setConversation
             }
             catch(error) {
                 console.log(error)
@@ -51,6 +52,11 @@ const Chat = () => {
         getMessages()
 
    }, [user._id])
+
+   
+
+   //MEssages
+   
 
 
     return(
@@ -85,31 +91,36 @@ const Chat = () => {
                     </div>
                 </div>
             <div className="container-message">
-                { currentChat ? 
-                (<>
-                    <div className="message">
-                        <div className="my-image">
-                            <img src={profil} alt="profil" title="profil" className='my_profil_msg' />
-                            <div className="Online">
-                                <div className="online-name">{listeUser.name}</div>
-                                <div className="if-online">Online</div>
+            { currentChat ? 
+                (
+                    <>
+                        <div className="message">
+                            <div className="my-image">
+                                <img src={profil} alt="profil" title="profil" className='my_profil_msg' />
+                                <div className="Online">
+                                    <div className="online-name">{listeUser.name}</div>
+                                    <div className="if-online">Online</div>
+                                </div>
                             </div>
+                            <hr className="list-hr"></hr>
+                
+                            <div className="list-message">
+                                    <Message messages={messages} own={true} />
+                                    <Message />
+                            </div>
+                            <form className="form">
+                                <hr></hr>
+                                <input type="text" placeholder=""/>
+                                <button>send</button>
+                            </form>
+               
+                            
                         </div>
-                        <hr className="list-hr"></hr>
-                        <div className="list-message">
-                                <Message messages={messages} own={true} />
-                                <Message />
-                        </div>
-                        <form className="form">
-                            <hr></hr>
-                            <input type="text" placeholder=""/>
-                            <button>send</button>
-                        </form>
-                    </div>
-                </>) : (
-                <span className="no-chat">Open a Conversation to start a chat</span>
+                    </>
+                ) : (
+                  <span className="no-chat">Open a Conversation to start a chat</span>
                 )
-                }
+            }
             </div>
        </div>
     )
