@@ -1,33 +1,35 @@
 import React, { useEffect, useState } from "react"
 import profil from '../images/Jeannot.jpeg'
-import Conversation from "../components/Conversation"
 import Message from '../components/Message'
 import axios from "axios"
-import { userChats } from "../api/ChatRequests"
 
 const Chat = () => {
 
     const [ listeUser, setListeUser ] = useState({})
     const [ chats , setChat ] = useState([])
     const [ users , setUsers ] = useState([])
-    const [ messages, setMessages ] = useState([])
+    const [ messageReceive, setMessageReceive ] = useState({})
     const [ currentChat, setCurrentChat ] = useState(null)
 
     const showUser = (listUsers) => {
         setListeUser(listUsers)
-        // setMessages("comment")
         setCurrentChat(listUsers)
+        
     }
+    console.log("ID USER COLABORATEUR :  ", listeUser._id) // ID USER CONVERSATION
+    
+
     //Id User
     const user = JSON.parse(localStorage.getItem("user"))
+    console.log('USER ID CONNECT : ', user._id)
    
-    //Users
+    //User
    useEffect(() => {
 
         const getChats = async() => {
             try{
                 const { data } = await axios.get(`http://localhost:3005/auth/user/${user._id}`)
-                console.log("My RESPONSE : ", data)
+                console.log("ALL USER : ", data)
                 setUsers(data)
             }
             catch(err) {
@@ -37,13 +39,15 @@ const Chat = () => {
         getChats()
    }, [user._id])
 
+   
+
    //Messages
    useEffect(() => {
         const getMessages = async() => {
             try{
                 const allMessage = await axios.get(`http://localhost:3005/chat/${user._id}`)
-                console.log("chat/user : ", allMessage)
-                setChat("allMessage", allMessage) //setConversation
+                console.log("CONVERSATION", allMessage) //ID conversation // CONVERSATION
+                setChat(allMessage) //setConversation
             }
             catch(error) {
                 console.log(error)
@@ -53,10 +57,21 @@ const Chat = () => {
 
    }, [user._id])
 
-   
-
    //MEssages
-   
+   useEffect(() => {
+        const getUserMessage = async() => {
+            try{
+                const message = await axios.get(`http://localhost:3005/message/${listeUser._id}`)
+                // setMessageReceive(message)
+                console.log("ID listeUser Receive ", message)
+                
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+        getUserMessage()
+   }, [])
 
 
     return(
@@ -105,7 +120,7 @@ const Chat = () => {
                             <hr className="list-hr"></hr>
                 
                             <div className="list-message">
-                                    <Message messages={messages} own={true} />
+                                    <Message own={true} />
                                     <Message />
                             </div>
                             <form className="form">
