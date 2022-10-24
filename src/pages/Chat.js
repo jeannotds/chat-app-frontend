@@ -17,11 +17,12 @@ const Chat = () => {
         
     }
     console.log("ID USER COLABORATEUR :  ", listeUser._id) // ID USER CONVERSATION
+
     
 
     //Id User
     const user = JSON.parse(localStorage.getItem("user"))
-    console.log('USER ID CONNECT : ', user._id)
+    // console.log('USER ID CONNECT : ', user._id)
    
     //User
    useEffect(() => {
@@ -29,7 +30,7 @@ const Chat = () => {
         const getChats = async() => {
             try{
                 const { data } = await axios.get(`http://localhost:3005/auth/user/${user._id}`)
-                console.log("ALL USER : ", data)
+                // console.log("ALL USER : ", data)
                 setUsers(data)
             }
             catch(err) {
@@ -46,7 +47,8 @@ const Chat = () => {
         const getMessages = async() => {
             try{
                 const allMessage = await axios.get(`http://localhost:3005/chat/${user._id}`)
-                console.log("CONVERSATION", allMessage) //ID conversation // CONVERSATION
+                // console.log("CONVERSATION", allMessage)
+                 //ID conversation // CONVERSATION
                 setChat(allMessage) //setConversation
             }
             catch(error) {
@@ -63,15 +65,17 @@ const Chat = () => {
             try{
                 const message = await axios.get(`http://localhost:3005/message/${listeUser._id}`)
                 // setMessageReceive(message)
-                console.log("ID listeUser Receive ", message)
-                
+                // setMessageReceive(message)
+                console.log("message", message)
             }
             catch(err){
                 console.log(err)
             }
         }
         getUserMessage()
-   }, [])
+   }, [listeUser._id])
+
+   console.log("ID listeUser Receive ", messageReceive)
 
 
     return(
