@@ -65,8 +65,8 @@ const Chat = () => {
             try{
                 const message = await axios.get(`http://localhost:3005/message/${listeUser._id}`)
                 // setMessageReceive(message)
-                // setMessageReceive(message)
-                console.log("message", message)
+                setMessageReceive(message)
+                // console.log("message of a USER receive", messageReceive)
             }
             catch(err){
                 console.log(err)
@@ -75,7 +75,9 @@ const Chat = () => {
         getUserMessage()
    }, [listeUser._id])
 
-   console.log("ID listeUser Receive ", messageReceive)
+   console.log("ID listeUser Receive ", messageReceive.data)
+
+   //CONVERSATION DEUX USERS
 
 
     return(
@@ -124,8 +126,22 @@ const Chat = () => {
                             <hr className="list-hr"></hr>
                 
                             <div className="list-message">
-                                    <Message own={true} />
-                                    <Message />
+                                    {/* <Message own={true} /> */}
+                                    {/* {
+                                        messageReceive.map((msg) => (
+                                            <Message msg={msg} />
+                                        ))
+                                    } */}
+                                    
+
+                                    {messageReceive.data.map((msg) => (
+                                        <div key={msg._id}>
+                                            <Message msg={msg} own={msg.sender === listeUser._id}/>
+                                        </div>
+                                    ))}
+                                     
+                                            
+                                   
                             </div>
                             <form className="form">
                                 <hr></hr>
