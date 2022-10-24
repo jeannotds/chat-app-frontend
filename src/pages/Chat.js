@@ -11,14 +11,16 @@ const Chat = () => {
     const [ chats , setChat ] = useState([])
     const [ users , setUsers ] = useState([])
     const [ messages, setMessages ] = useState([])
+    const [ currentChat, setCurrentChat ] = useState(null)
 
     const showUser = (listUsers) => {
         setListeUser(listUsers)
         setMessages("comment")
     }
-
+    //Id User
     const user = JSON.parse(localStorage.getItem("user"))
    
+    //Users
    useEffect(() => {
 
         const getChats = async() => {
@@ -34,11 +36,12 @@ const Chat = () => {
         getChats()
    }, [user._id])
 
+   //Messages
    useEffect(() => {
         const getMessages = async() => {
             try{
                 const allMessage = await axios.get(`http://localhost:3005/chat/${user._id}`)
-                console.log("allMessageSender", allMessage)
+                console.log("chat/user : ", allMessage)
                 setChat(allMessage) //setConversation
             }
             catch(error) {
@@ -62,45 +65,51 @@ const Chat = () => {
                             <h4>Recent</h4>
                             <div className='recent-down'>
                                 {users?.user?.map((listUsers) => (
-                                        <div className='friend' key={listUsers._id}  onClick={()=>showUser(listUsers)}>
-                                            <div className='my-friend' >
-                                                <img src={profil} alt="profil" title="profil" className='profil-recent' />
-                                                    <div className='name-friend'>
-                                                        <span className='name'>
-                                                            {listUsers.name}
-                                                        </span>
-                                                    <div className='alert-msg'>Last message</div>
-                                                </div>
+                                    <div className='friend' key={listUsers._id}  onClick={()=>showUser(listUsers)}>
+                                        <div className='my-friend' >
+                                            <img src={profil} alt="profil" title="profil" className='profil-recent' />
+                                                <div className='name-friend'>
+                                                    <span className='name'>
+                                                        {listUsers.name}
+                                                    </span>
+                                                <div className='alert-msg'>Last message</div>
                                             </div>
-                                            <div className='container-hr'>
-                                                <div className='hr'></div>
-                                            </div>
-                                        </div>    
+                                        </div>
+                                        <div className='container-hr'>
+                                            <div className='hr'></div>
+                                        </div>
+                                    </div>    
                                 ))}    
                             </div>
                         </div>
                     </div>
                 </div>
             <div className="container-message">
-                <div className="message">
-                    <div className="my-image">
-                        <img src={profil} alt="profil" title="profil" className='my_profil_msg' />
-                        <div className="Online">
-                            <div className="online-name">{listeUser.name}</div>
-                            <div className="if-online">Online</div>
+                { currentChat ? 
+                (<>
+                    <div className="message">
+                        <div className="my-image">
+                            <img src={profil} alt="profil" title="profil" className='my_profil_msg' />
+                            <div className="Online">
+                                <div className="online-name">{listeUser.name}</div>
+                                <div className="if-online">Online</div>
+                            </div>
                         </div>
+                        <hr className="list-hr"></hr>
+                        <div className="list-message">
+                                <Message messages={messages} own={true} />
+                                <Message />
+                        </div>
+                        <form className="form">
+                            <hr></hr>
+                            <input type="text" placeholder=""/>
+                            <button>send</button>
+                        </form>
                     </div>
-                    <hr className="list-hr"></hr>
-                    <div className="list-message">
-                            <Message own={true} />
-                            <Message />
-                    </div>
-                    <form className="form">
-                        <hr></hr>
-                        <input type="text" placeholder=""/>
-                        <button>send</button>
-                    </form>
-                </div> 
+                </>) : (
+                <span className="no-chat">Open a Conversation to start a chat</span>
+                )
+                }
             </div>
        </div>
     )
