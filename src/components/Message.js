@@ -4,7 +4,6 @@ import "../styles/messahe.css";
 
 // eslint-disable-next-line react/prop-types
 const Message = ({ own, msg }) => {
-    
   return (
     <div className={own ? "message-1 own" : "message-1"}>
       <div className="messageTop">
