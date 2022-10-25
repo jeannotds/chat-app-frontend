@@ -1,14 +1,14 @@
 import { Button,  Row, Form, Col, Container } from "react-bootstrap"
-
+import React from "react";
 import '../styles/login.css'
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useEffect } from 'react';
 import axios  from "axios";
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
-import userContext from "./userContext";
 
 
+// eslint-disable-next-line react/prop-types, no-unused-vars
 const Login = ({user, setUser}) => {
 
     // const { setUser } = useContext(userContext);
@@ -19,13 +19,14 @@ const Login = ({user, setUser}) => {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
+        // eslint-disable-next-line no-unused-vars
         const user = localStorage.getItem('user')
         axios.get('http://localhost:3005/auth/protected', {
             headers : {
                 Authorization: token
             }
         }).then(res => {
-            // console.log(res)
+            console.log(res)
             navigate('/chat')
         }).catch(err => {
             console.log(err)
@@ -39,11 +40,15 @@ const Login = ({user, setUser}) => {
         axios.post("http://localhost:3005/auth/login", {email, password})
         .then(user => {
             // console.log(user)
+            // eslint-disable-next-line react/prop-types
             localStorage.setItem("token", user.data.token)
+            // eslint-disable-next-line react/prop-types, no-unused-vars
             const data = user.data.user
+            // eslint-disable-next-line react/prop-types
             console.log("uusseur",user.data.user)
             navigate('/chat')
             setUser(user)
+            // eslint-disable-next-line react/prop-types
             localStorage.setItem('user', JSON.stringify(user.data.user))
             // localStorage.setItem('testObject', JSON.stringify(testObject));
 
