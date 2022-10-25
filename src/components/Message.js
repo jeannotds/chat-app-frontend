@@ -11,7 +11,6 @@ const Message = ({ own, msg }) => {
         <p className="messageText">{msg.text}</p>
       </div>
       <div className="messageBottom">{msg.updatedAt}</div>
-      <div></div>
     </div>
   );
 };
