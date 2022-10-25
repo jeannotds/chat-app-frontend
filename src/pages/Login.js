@@ -1,15 +1,15 @@
 import { Button,  Row, Form, Col, Container } from "react-bootstrap"
-
+import React from "react";
 import '../styles/login.css'
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from 'react';
 import axios  from "axios";
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
-// import userContext from "./userContext";
+import userContext from "./userContext";
 
 
-const Login = () => {
+const Login = ({user, setUser}) => {
 
     // const { setUser } = useContext(userContext);
 
@@ -19,13 +19,13 @@ const Login = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token')
-        // const user = localStorage.getItem('user')
+        const user = localStorage.getItem('user')
         axios.get('http://localhost:3005/auth/protected', {
             headers : {
                 Authorization: token
             }
         }).then(res => {
-            // console.log(res)
+            console.log(res)
             navigate('/chat')
         }).catch(err => {
             console.log(err)
@@ -39,11 +39,12 @@ const Login = () => {
         axios.post("http://localhost:3005/auth/login", {email, password})
         .then(user => {
             // console.log(user)
+            // eslint-disable-next-line react/prop-types
             localStorage.setItem("token", user.data.token)
-            // const data = user.data.user
+            const data = user.data.user
             console.log("uusseur",user.data.user)
             navigate('/chat')
-            // setUser(user)
+            setUser(user)
             localStorage.setItem('user', JSON.stringify(user.data.user))
             // localStorage.setItem('testObject', JSON.stringify(testObject));
 
