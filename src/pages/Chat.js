@@ -6,10 +6,11 @@ import axios from "axios";
 const Chat = () => {
   const [userChat, setUserChat] = useState({});
   // eslint-disable-next-line no-unused-vars
-  const [chats, setChat] = useState([]);
+  const [chats, setChats] = useState([]);
   const [users, setUsers] = useState([]);
   const [UserReceiveMessage, setUserReceiveMessage] = useState({});
   const [currentChat, setCurrentChat] = useState(null);
+  const [bothUserChat, setBothUsrChat] = useState({});
 
   const showUser = (listUsers) => {
     setUserChat(listUsers);
@@ -34,20 +35,39 @@ const Chat = () => {
     getChats();
   }, [user._id]);
 
-  //CONVERSATION
+  //MY CONVERSATION
   useEffect(() => {
     const getUSerConversation = async () => {
       try {
         const allChat = await axios.get(
           `http://localhost:3005/chat/${user._id}`
         );
-        setChat(allChat); //Conversation
+        setChats(allChat); //Conversation
       } catch (error) {
         console.log(error);
       }
     };
     getUSerConversation();
   }, [user._id]);
+
+  // BOTH CONVERSATION
+  useEffect(() => {
+    const getBothConversation = async () => {
+      try {
+        const bothChat = await axios.get(
+          `http://localhost:3005/chat/find/${userChat._id}/${user._id}`
+        );
+        setBothUsrChat(bothChat);
+        console.log("bothChat", bothChat);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getBothConversation();
+  }, [userChat._id, user._id]);
+
+  // console.log('Both conversation', bothUserChat);
+
 
   //MESSAGE
   useEffect(() => {
@@ -66,7 +86,8 @@ const Chat = () => {
 
 
   //CONVERSATION DEUX USERS
-  
+
+
 
   
 
