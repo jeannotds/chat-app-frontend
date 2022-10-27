@@ -58,7 +58,6 @@ const Chat = () => {
           `http://localhost:3005/chat/find/${userChat._id}/${user._id}`
         );
         setBothUsrChat(bothChat);
-        console.log("bothChat", bothChat);
       } catch (error) {
         console.log(error);
       }
@@ -66,8 +65,9 @@ const Chat = () => {
     getBothConversation();
   }, [userChat._id, user._id]);
 
-  // console.log('Both conversation', bothUserChat);
+  console.log(bothUserChat);
 
+  // console.log('Both conversation', bothUserChat);
 
   //MESSAGE
   useEffect(() => {
@@ -84,12 +84,7 @@ const Chat = () => {
     getUserMessage();
   }, [userChat._id]);
 
-
   //CONVERSATION DEUX USERS
-
-
-
-  
 
   return (
     <div className="chat">
