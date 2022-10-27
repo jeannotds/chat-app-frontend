@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from "react";
 import "../styles/messahe.css";
+// import { format } from "timeago.js";
 
 // eslint-disable-next-line react/prop-types
 const Message = ({ own, msg }) => {
@@ -10,7 +11,7 @@ const Message = ({ own, msg }) => {
         {/* <img src=''  alt='profil' title=''/> */}
         <p className="messageText">{msg.text}</p>
       </div>
-      <div className="messageBottom">{msg.updatedAt}</div>
+      <div className="messageBottom"></div>
     </div>
   );
 };

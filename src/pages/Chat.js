@@ -9,12 +9,14 @@ const Chat = () => {
   const [chats, setChats] = useState([]);
   const [users, setUsers] = useState([]);
   const [UserReceiveMessage, setUserReceiveMessage] = useState({});
+  const [userSenderMessage, setUserSenderMessage] = useState({});
   const [currentChat, setCurrentChat] = useState(null);
   const [bothUserChat, setBothUsrChat] = useState({});
 
   const showUser = (listUsers) => {
     setUserChat(listUsers);
-    setCurrentChat(listUsers);
+    // setCurrentChat(listUsers);
+    setCurrentChat(bothUserChat);
   };
 
   //USER COONECT TO PAGE
@@ -43,12 +45,15 @@ const Chat = () => {
           `http://localhost:3005/chat/${user._id}`
         );
         setChats(allChat); //Conversation
+        console.log("chats", chats);
       } catch (error) {
         console.log(error);
       }
     };
     getUSerConversation();
   }, [user._id]);
+
+  
 
   // BOTH CONVERSATION
   useEffect(() => {
@@ -65,11 +70,8 @@ const Chat = () => {
     getBothConversation();
   }, [userChat._id, user._id]);
 
-  console.log(bothUserChat);
 
-  // console.log('Both conversation', bothUserChat);
-
-  //MESSAGE
+  //MESSAGE RECEIVER
   useEffect(() => {
     const getUserMessage = async () => {
       try {
@@ -77,12 +79,29 @@ const Chat = () => {
           `http://localhost:3005/message/${userChat._id}`
         );
         setUserReceiveMessage(message);
+        console.log("RECEIVE : ", UserReceiveMessage);
       } catch (err) {
         console.log(err);
       }
     };
     getUserMessage();
   }, [userChat._id]);
+
+  //MESSAGE SENDER
+  useEffect(() => {
+    const getUserSenderMessage = async () => {
+      try {
+        const message = await axios.get(
+          `http://localhost:3005/message/${user._id}`
+        );
+        setUserSenderMessage(message);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    // if(userSenderMessage != null)
+    getUserSenderMessage();
+  }, [user._id, userSenderMessage]);
 
   //CONVERSATION DEUX USERS
 
@@ -149,15 +168,10 @@ const Chat = () => {
 
               <div className="list-message">
                 {/* <Message own={true} /> */}
-                {/* {
-                                        messageReceive.map((msg) => (
-                                            <Message msg={msg} />
-                                        ))
-                                    } */}
 
                 {UserReceiveMessage.data.map((msg) => (
                   <div key={msg._id}>
-                    <Message msg={msg} own={msg.sender === userChat._id} />
+                    <Message msg={msg} />
                   </div>
                 ))}
               </div>
