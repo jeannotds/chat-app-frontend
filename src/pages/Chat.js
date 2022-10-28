@@ -10,11 +10,13 @@ const Chat = () => {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
+  const [newMessage, setNewMessage] = useState("");
 
   const showUser = (listUsers) => {
     setListeUser(listUsers);
     setCurrentChat(listUsers);
   };
+
   // console.log("ID USER COLABORATEUR :  ", listeUser._id); // ID USER CONVERSATION
 
   console.log("chats => ", chats);
@@ -47,10 +49,36 @@ const Chat = () => {
       .catch((err) => console.log(err));
   }, [listeUser._id, user._id]);
 
-  console.log(messages)
+  console.log(messages);
 
-  // console.log("ID SENDER : ", user._id);
-  // console.log("ID RECEIVE : ", listeUser._id);
+  //SEND A MESSAGE
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+
+    axios.post(`http://localhost:3005/message`, 
+      {
+        senderId: user._id,
+        chatId: listeUser._id,
+        text: newMessage
+      }
+      );
+      setNewMessage("");
+      console.log(newMessage);
+  };
+
+  // useEffect(() => {
+  //   axios
+  //     .post(`http://localhost:3005/message`, {
+  //       senderId: user._id,
+  //       receiveId: listeUser._id,
+  //       messageSend: messageSend,
+  //     })
+  //     .then((res) => {
+  //       setMessageSend(messageSend);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <div className="chat">
@@ -114,22 +142,24 @@ const Chat = () => {
               <hr className="list-hr"></hr>
 
               <div className="list-message">
-                
-                  {
-                    messages.map((message) => (
-                      <div key={message._id}>
-                          <Message message={message} own={message.senderId === user._id} />
-                      </div>
-                    ))
-                  }
-
-                {/* <Message own={true} /> */}
-
+                {messages.map((message) => (
+                  <div key={message._id}>
+                    <Message
+                      message={message}
+                      own={message.senderId === user._id}
+                    />
+                  </div>
+                ))}
               </div>
               <form className="form">
                 <hr></hr>
-                <input type="text" placeholder="" />
-                <button>send</button>
+                <input
+                  type="text"
+                  placeholder="Ecrire un message..."
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  value={newMessage}
+                />
+                <button onClick={sendMessage}>send</button>
               </form>
             </div>
           </>
@@ -142,48 +172,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
-// const [ user, setuser ] = useState([])
-
-// useEffect(() => {
-//     const getUsers = async()=>{
-//         try {
-//             const response=await axios.get("http://localhost:3005/api/auth/")
-//             setuser(response.data)
-//         } catch (error) {
-//         console.log(error)
-//         }
-//     }
-//     getUsers()
-// }, [])
-
-// console.log("USER : ", user)
-
-//     const [ chat, setChat ] = useState([])
-
-//     useEffect(() => {
-//         const getUsers = async()=>{
-//             try {
-//                 const response=await axios.get(`http://localhost:3005/api/chat/${user._id}`)
-//                 // console.log(response.data)
-//                 setChat(response.data)
-//             } catch (error) {
-//             console.log(error)
-//             }
-//         }
-//         getUsers()
-// }, [])
-
-// const getChats = async() => {
-
-//     try{
-//         // const { data } = await userChats(user._id)
-//         const { data } = await userChats()
-//         setChats(data)
-//     }
-//     catch(error) {
-//         console.log(error)
-//     }
-
-// }
-// getChats()
