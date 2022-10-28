@@ -8,20 +8,20 @@ const Chat = () => {
   // eslint-disable-next-line no-unused-vars
   const [chats, setChat] = useState([]);
   const [users, setUsers] = useState([]);
-  const [messageReceive, setMessageReceive] = useState({});
+  const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
 
   const showUser = (listUsers) => {
     setListeUser(listUsers);
     setCurrentChat(listUsers);
   };
-  console.log("ID USER COLABORATEUR :  ", listeUser._id); // ID USER CONVERSATION
+  // console.log("ID USER COLABORATEUR :  ", listeUser._id); // ID USER CONVERSATION
 
   console.log("chats => ", chats);
 
   //Id User
   const user = JSON.parse(localStorage.getItem("user"));
-  // console.log('USER ID CONNECT : ', user._id)
+  // console.log("list user", listeUser);
 
   //User
   useEffect(() => {
@@ -30,7 +30,6 @@ const Chat = () => {
         const { data } = await axios.get(
           `http://localhost:3005/auth/user/${user._id}`
         );
-        // console.log("ALL USER : ", data)
         setUsers(data);
       } catch (err) {
         console.log(err);
@@ -39,43 +38,19 @@ const Chat = () => {
     getChats();
   }, [user._id]);
 
-  //Messages
   useEffect(() => {
-    const getMessages = async () => {
-      try {
-        const allMessage = await axios.get(
-          `http://localhost:3005/chat/${user._id}`
-        );
-        // console.log("CONVERSATION", allMessage)
-        //ID conversation // CONVERSATION
-        setChat(allMessage); //setConversation
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getMessages();
-  }, [user._id]);
+    axios
+      .get(`http://localhost:3005/message/${user._id}/${listeUser._id}`)
+      .then((res) => {
+        setMessages(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, [listeUser._id, user._id]);
 
-  //MEssages
-  useEffect(() => {
-    const getUserMessage = async () => {
-      try {
-        const message = await axios.get(
-          `http://localhost:3005/message/${listeUser._id}`
-        );
-        // setMessageReceive(message)
-        setMessageReceive(message);
-        // console.log("message of a USER receive", messageReceive)
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUserMessage();
-  }, [listeUser._id]);
+  console.log(messages)
 
-  console.log("ID listeUser Receive ", messageReceive.data);
-
-  //CONVERSATION DEUX USERS
+  // console.log("ID SENDER : ", user._id);
+  // console.log("ID RECEIVE : ", listeUser._id);
 
   return (
     <div className="chat">
@@ -139,18 +114,17 @@ const Chat = () => {
               <hr className="list-hr"></hr>
 
               <div className="list-message">
-                {/* <Message own={true} /> */}
-                {/* {
-                                        messageReceive.map((msg) => (
-                                            <Message msg={msg} />
-                                        ))
-                                    } */}
+                
+                  {
+                    messages.map((message) => (
+                      <div key={message._id}>
+                          <Message message={message} own={message.senderId === user._id} />
+                      </div>
+                    ))
+                  }
 
-                {messageReceive.data.map((msg) => (
-                  <div key={msg._id}>
-                    <Message msg={msg} own={msg.sender === listeUser._id} />
-                  </div>
-                ))}
+                {/* <Message own={true} /> */}
+
               </div>
               <form className="form">
                 <hr></hr>
