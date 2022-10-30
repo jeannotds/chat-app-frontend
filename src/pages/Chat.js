@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import profil from "../images/Jeannot.jpeg";
 import Message from "../components/Message";
 import axios from "axios";
+import { io } from "socket.io-client";
 
 const Chat = () => {
   const [listeUser, setListeUser] = useState({});
@@ -11,6 +12,11 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    setSocket(io("ws://localhost:8900"));
+  }, []);
 
   const showUser = (listUsers) => {
     setListeUser(listUsers);
@@ -56,15 +62,13 @@ const Chat = () => {
   const sendMessage = (e) => {
     e.preventDefault();
 
-    axios.post(`http://localhost:3005/message`, 
-      {
-        senderId: user._id,
-        chatId: listeUser._id,
-        text: newMessage
-      }
-      );
-      setNewMessage("");
-      console.log(newMessage);
+    axios.post(`http://localhost:3005/message`, {
+      senderId: user._id,
+      chatId: listeUser._id,
+      text: newMessage,
+    });
+    setNewMessage("");
+    console.log(newMessage);
   };
 
   // useEffect(() => {
