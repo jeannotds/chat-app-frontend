@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import profil from "../images/Jeannot.jpeg";
 import Message from "../components/Message";
 import axios from "axios";
@@ -12,26 +12,30 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
-  const [socket, setSocket] = useState(null);
+  const socket = useRef();
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
-  useEffect(() => {
-    setSocket(io("ws://localhost:8900"));
-  }, []);
+  //Id User
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const showUser = (listUsers) => {
     setListeUser(listUsers);
     setCurrentChat(listUsers);
   };
 
+  useEffect(() => {
+    socket.current = io("http://localhost:8900");
+    socket.current.emit("new-user-add", users);
+    socket.current.on("get-users", (users) => {
+      setOnlineUsers(users);
+      console.log("onlineUsers");
+    });
+  }, [users]);
+
   // console.log("ID USER COLABORATEUR :  ", listeUser._id); // ID USER CONVERSATION
 
-  console.log("chats => ", chats);
 
-  //Id User
-  const user = JSON.parse(localStorage.getItem("user"));
-  // console.log("list user", listeUser);
-
-  //User
+  //U
   useEffect(() => {
     const getChats = async () => {
       try {
@@ -46,6 +50,7 @@ const Chat = () => {
     getChats();
   }, [user._id]);
 
+  //CONVERSATION
   useEffect(() => {
     axios
       .get(`http://localhost:3005/message/${user._id}/${listeUser._id}`)
