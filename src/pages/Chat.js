@@ -34,7 +34,6 @@ const Chat = () => {
 
   console.log("ID USER COLABORATEUR :  ", listeUser._id); // ID USER CONVERSATION
 
-
   //U
   useEffect(() => {
     const getChats = async () => {
@@ -75,6 +74,7 @@ const Chat = () => {
     setNewMessage("");
     console.log(newMessage);
   };
+  console.log("");
 
   // useEffect(() => {
   //   axios
