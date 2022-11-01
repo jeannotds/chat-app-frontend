@@ -12,29 +12,32 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
-  const socket = useRef();
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [sendMessageSocket, setSendMessageSocket] = useState(null);
+
+  const socket = useRef();
+
+  //ALL USERS
+  const allUserId = users?.user?.map((user) => user._id);
 
   //Id User
   const user = JSON.parse(localStorage.getItem("user"));
+  // console.log("user", user);
+
+  useEffect(() => {
+    socket.current = io("http://localhost:3005");
+    socket.current.emit("new-user-add", user._id);
+    socket.current.on("get-users", (users) => {
+      setOnlineUsers(users);
+    });
+  }, [user._id]);
 
   const showUser = (listUsers) => {
     setListeUser(listUsers);
     setCurrentChat(listUsers);
   };
 
-  useEffect(() => {
-    socket.current = io("http://localhost:8900");
-    socket.current.emit("new-user-add", users);
-    socket.current.on("get-users", (users) => {
-      setOnlineUsers(users);
-      console.log("onlineUsers");
-    });
-  }, [users]);
-
-  console.log("ID USER COLABORATEUR :  ", listeUser._id); // ID USER CONVERSATION
-
-  //U
+  //USER
   useEffect(() => {
     const getChats = async () => {
       try {
@@ -59,10 +62,7 @@ const Chat = () => {
       .catch((err) => console.log(err));
   }, [listeUser._id, user._id]);
 
-  console.log(messages);
-
   //SEND A MESSAGE
-
   const sendMessage = (e) => {
     e.preventDefault();
 
@@ -73,21 +73,13 @@ const Chat = () => {
     });
     setNewMessage("");
     console.log(newMessage);
-  };
-  console.log("");
 
-  // useEffect(() => {
-  //   axios
-  //     .post(`http://localhost:3005/message`, {
-  //       senderId: user._id,
-  //       receiveId: listeUser._id,
-  //       messageSend: messageSend,
-  //     })
-  //     .then((res) => {
-  //       setMessageSend(messageSend);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
+    //SEND MESSAGE TO SOCKET SERVER
+  };
+  // console.log("All users : ", users);
+  const receiverId = allUserId;
+   console.log("All users : ", receiverId);
+
 
   return (
     <div className="chat">
@@ -156,6 +148,7 @@ const Chat = () => {
                     <Message
                       message={message}
                       own={message.senderId === user._id}
+                      setSendMessageSocket={setSendMessageSocket}
                     />
                   </div>
                 ))}
