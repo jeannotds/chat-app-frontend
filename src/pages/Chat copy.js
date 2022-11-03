@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import profil from "../images/Jeannot.jpeg";
 import Message from "../components/Message";
 import axios from "axios";
-import { socket } from "./socketio";
+import io from "socket.io-client";
+
+// "build": "CI=true && react-scripts build",
 
 const Chat = () => {
   const [listeUser, setListeUser] = useState({});
@@ -12,16 +14,25 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
+  const [socket, setSoket] = useState(io("http://localhost:3005"));
 
-  //Id User
-  const user = JSON.parse(localStorage.getItem("user"));
+  // const [socket, setSocket] = useState(null);
+
+  // const socket = io("ws://localhost:3000");
 
   useEffect(() => {
-    socket.emit("test", "salut");
-  });
+    // setSocket(io("ws://localhost:3005"));
+    socket.on("get-messages", (data) => {
+      console.log("data client : ", data);
+      setMessages(data);
+    });
+  }, []);
 
   //ALL USERS
   // const allUserId = users?.user?.map((user) => user._id);
+
+  //Id User
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const showUser = (listUsers) => {
     setListeUser(listUsers);
@@ -57,19 +68,30 @@ const Chat = () => {
   const sendMessage = (e) => {
     e.preventDefault();
 
-    axios.post(`http://localhost:3005/message`, {
+    // axios.post(`http://localhost:3005/message`, {
+    //   senderId: user._id,
+    //   chatId: listeUser._id,
+    //   text: newMessage,
+    // });
+    // setNewMessage("");
+    // console.log(newMessage);
+
+    // SEND MESSAGE TO SOCKET SERVER
+
+    //   socket.emit("send-message", {
+    //     senderId: user._id,
+    //     chatId: listeUser._id,
+    //     text: newMessage,
+    //   });
+    // };
+
+    socket.emit("send-message", {
       senderId: user._id,
       chatId: listeUser._id,
       text: newMessage,
     });
     setNewMessage("");
-    console.log(newMessage);
-
-    //SEND MESSAGE TO SOCKET SERVER
   };
-  // console.log("All users : ", users);
-  // const receiverId = allUserId;
-  // console.log("All users id : ", receiverId);
 
   return (
     <div className="chat">
