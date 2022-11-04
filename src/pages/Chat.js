@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import profil from "../images/Jeannot.jpeg";
 import Message from "../components/Message";
 import axios from "axios";
-import { socket } from "./socketio";
+import { io } from "socket.io-client";
 
 const Chat = () => {
   const [listeUser, setListeUser] = useState({});
@@ -12,23 +12,44 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
+  const [arriveMessage, setArriveMessage] = useState(null);
+  // const [socket, setSocket] = useState(null);
+  const socket = useRef();
 
   //Id User
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    socket.emit("test", "salut");
-  });
+    socket.current = io("ws://localhost:3005");
+    socket.current.on("getMessage", (data) => {
+      // console.log("data : ", data);
+      // setArriveMessage(data);
+      setArriveMessage({
+        senderId: data.senderId,
+        chatId: data.chatId,
+        text: data.text,
+        // createdAt: Date.now()
+      });
+    });
+  }, []);
 
-  //ALL USERS
-  // const allUserId = users?.user?.map((user) => user._id);
+  console.log("arriveMessage : ", arriveMessage);
+
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+    // socket.current.on("getUsers", (users) => {
+    //   console.log("users : ", users);
+    // });
+  }, [user]);
 
   const showUser = (listUsers) => {
     setListeUser(listUsers);
     setCurrentChat(listUsers);
   };
 
-  //USER
+  // console.log("ID USER COLABORATEUR :  ", listeUser._id); // ID USER CONVERSATION
+
+  //U
   useEffect(() => {
     const getChats = async () => {
       try {
@@ -51,9 +72,12 @@ const Chat = () => {
         setMessages(res.data);
       })
       .catch((err) => console.log(err));
-  }, [listeUser._id, user._id]);
+  }, [messages]);
+
+  // console.log(messages);
 
   //SEND A MESSAGE
+
   const sendMessage = (e) => {
     e.preventDefault();
 
@@ -63,13 +87,32 @@ const Chat = () => {
       text: newMessage,
     });
     setNewMessage("");
-    console.log(newMessage);
+    // console.log(newMessage);
 
-    //SEND MESSAGE TO SOCKET SERVER
+    // send Socket
+    socket.current.emit("sendMessage", {
+      senderId: user._id,
+      chatId: listeUser._id,
+      text: newMessage,
+    });
   };
-  // console.log("All users : ", users);
-  // const receiverId = allUserId;
-  // console.log("All users id : ", receiverId);
+
+  useEffect(() => {
+    socket.current.on("getMessage", (data) => {});
+  }, []);
+
+  // useEffect(() => {
+  //   axios
+  //     .post(`http://localhost:3005/message`, {
+  //       senderId: user._id,
+  //       receiveId: listeUser._id,
+  //       messageSend: messageSend,
+  //     })
+  //     .then((res) => {
+  //       setMessageSend(messageSend);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <div className="chat">
