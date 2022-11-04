@@ -28,12 +28,13 @@ const Chat = () => {
         senderId: data.senderId,
         chatId: data.chatId,
         text: data.text,
-        // createdAt: Date.now()
+        createdAt: Date.now(),
       });
     });
   }, []);
 
   console.log("arriveMessage : ", arriveMessage);
+  // console.log("kdjnqsdjln ldqksdlqskd");
 
   useEffect(() => {
     socket.current.emit("addUser", user._id);
@@ -72,7 +73,7 @@ const Chat = () => {
         setMessages(res.data);
       })
       .catch((err) => console.log(err));
-  }, [messages]);
+  }, [newMessage, user._id, listeUser._id]);
 
   // console.log(messages);
 
