@@ -19,10 +19,12 @@ const Chat = () => {
   //Id User
   const user = JSON.parse(localStorage.getItem("user"));
 
+  // const currentChat
+
   useEffect(() => {
     socket.current = io("ws://localhost:3005");
     socket.current.on("getMessage", (data) => {
-      // console.log("data : ", data);
+      // console.log("data receive: ", data);
       // setArriveMessage(data);
       setArriveMessage({
         senderId: data.senderId,
@@ -33,8 +35,13 @@ const Chat = () => {
     });
   }, []);
 
+  useEffect(() => {
+    // arriveMessage &&
+  }, [arriveMessage]);
+
   console.log("arriveMessage : ", arriveMessage);
-  // console.log("kdjnqsdjln ldqksdlqskd");
+  console.log("Liste User", listeUser);
+
 
   useEffect(() => {
     socket.current.emit("addUser", user._id);
@@ -47,6 +54,11 @@ const Chat = () => {
     setListeUser(listUsers);
     setCurrentChat(listUsers);
   };
+
+  // const =
+
+  console.log("CURRENT CHAT", currentChat);
+  console.log("Messages current", messages);
 
   // console.log("ID USER COLABORATEUR :  ", listeUser._id); // ID USER CONVERSATION
 
@@ -72,7 +84,7 @@ const Chat = () => {
       .then((res) => {
         setMessages(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err, "erreur erreur"));
   }, [newMessage, user._id, listeUser._id]);
 
   // console.log(messages);
@@ -82,11 +94,13 @@ const Chat = () => {
   const sendMessage = (e) => {
     e.preventDefault();
 
-    axios.post(`http://localhost:3005/message`, {
+    let myMessage = {
       senderId: user._id,
       chatId: listeUser._id,
       text: newMessage,
-    });
+    };
+    axios.post(`http://localhost:3005/message`, myMessage);
+
     setNewMessage("");
     // console.log(newMessage);
 
