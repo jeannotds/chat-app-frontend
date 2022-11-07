@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
+import { AiOutlineSend, AiOutlineSearch, AiOutlineCamera } from "react-icons/ai";
 import profil from "../images/Jeannot.jpeg";
 import Message from "../components/Message";
 import axios from "axios";
 import { io } from "socket.io-client";
+import Close from "../images/deconnect.png";
+import Imo from "../images/imo.png";
 
 const Chat = () => {
   const [listeUser, setListeUser] = useState({});
@@ -35,13 +38,14 @@ const Chat = () => {
     });
   }, []);
 
+  console.log("arriveMessage : ", arriveMessage);
+
   useEffect(() => {
     // arriveMessage &&
   }, [arriveMessage]);
 
   console.log("arriveMessage : ", arriveMessage);
   console.log("Liste User", listeUser);
-
 
   useEffect(() => {
     socket.current.emit("addUser", user._id);
@@ -140,9 +144,30 @@ const Chat = () => {
               title="profil"
               className="my_profil"
             />
+            <div className="imo-icon">
+              <img
+                  src={Imo}
+                  alt="profil"
+                  title="profil"
+                  className="imo-icon"
+                />
+           </div>
+           <div className="close-icon">
+            <img
+                src={Close}
+                alt="profil"
+                title="profil"
+                className="close"
+              />
+           </div>
           </div>
+          
           <div className="recent">
-            <input type="text" placeholder="Search" className="search" />
+            {/* AiOutlineSearch */}
+            <div className="recent-search">
+              <AiOutlineSearch className="icon-search" />
+              <input type="text" placeholder="Search" className="search" />
+            </div>
             <h4>Recent</h4>
             <div className="recent-down">
               {users?.user?.map((listUsers) => (
@@ -202,13 +227,20 @@ const Chat = () => {
               </div>
               <form className="form">
                 <hr></hr>
-                <input
-                  type="text"
-                  placeholder="Ecrire un message..."
-                  onChange={(e) => setNewMessage(e.target.value)}
-                  value={newMessage}
-                />
-                <button onClick={sendMessage}>send</button>
+                <div className="action-message">
+                  {/* <AiOutlineCamera /> */}
+                  <div className="input-bog">
+                    <input
+                      type="text"
+                      placeholder="Ecrire un message..."
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      value={newMessage}
+                    />
+                  </div>
+                  <button onClick={sendMessage}>
+                    <AiOutlineSend />
+                  </button>
+                </div>
               </form>
             </div>
           </>
