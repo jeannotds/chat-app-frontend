@@ -115,11 +115,13 @@ code {
 }
 
 .close-icon{
-    /* margin: 420px auto;
-    width: 60px; */
-    position: absolute;
-    bottom: 20px;
-    left: 38px;
+  display: flex;
+  justify-content: center;
+}
+.close{
+  width: 60px;
+  position: absolute;
+  top: 520px;
 }
 
 .imo-icon{
@@ -403,7 +405,39 @@ flex-direction: column;
     }
 }
 
+@media screen and (max-width: 860px) {
+  .imo-icon{
+    width: 65px;
+  }
 
+}
+
+@media screen and (max-width: 760px) {
+  .close{
+    width: 50px;
+    position: absolute;
+    top: 520px;
+  }
+  .my_profil{
+    width: 59px;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .close{
+    width: 40px;
+    position: absolute;
+    top: 520px;
+  }
+  .my_profil{
+    width: 30px;
+  }
+  .imo-icon{
+    width: 50px;
+  }
+}
+
+/* 
   
   .action-message{
     display: flex;
@@ -434,4 +468,4 @@ flex-direction: column;
   .list-hr{
     margin-bottom: 50px;
     margin-top: 20px;
-  }
+  } */

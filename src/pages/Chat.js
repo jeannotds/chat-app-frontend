@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AiOutlineSend, AiOutlineSearch, AiOutlineCamera } from "react-icons/ai";
+import {
+  AiOutlineSend,
+  AiOutlineSearch, // AiOutlineCamera,
+} from "react-icons/ai";
 import profil from "../images/Jeannot.jpeg";
 import Message from "../components/Message";
 import axios from "axios";
 import { io } from "socket.io-client";
 import Close from "../images/deconnect.png";
 import Imo from "../images/imo.png";
+import { Link } from "react-router-dom";
 
 const Chat = () => {
   const [listeUser, setListeUser] = useState({});
@@ -16,7 +20,7 @@ const Chat = () => {
   const [currentChat, setCurrentChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const [arriveMessage, setArriveMessage] = useState(null);
-  // const [socket, setSocket] = useState(null);
+  const [dash, setdash] = useState(null);
   const socket = useRef();
 
   //Id User
@@ -31,7 +35,7 @@ const Chat = () => {
       // setArriveMessage(data);
       setArriveMessage({
         senderId: data.senderId,
-        chatId: data.chatId,
+        // chatId: data.chatId,
         text: data.text,
         createdAt: Date.now(),
       });
@@ -133,11 +137,29 @@ const Chat = () => {
   //     .catch((err) => console.log(err));
   // }, []);
 
+  //Remove Localstarage
+  function removeLocastorage(e) {
+    let isExecuted = window.confirm("Are you sure to execute this action?");
+
+    if (isExecuted) {
+      alert("Action successfully executed");
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+    } else {
+      alert("Action canceled");
+      e.preventDefault();
+    }
+  }
+
+  function showDashboard() {
+    setdash(true);
+  }
+
   return (
     <div className="chat">
       <div className="sidebar">
         <div className="content-sidebar">
-          <div className="small-sidebar">
+          <div className="small-sidebar" onClick={showDashboard}>
             <img
               src={profil}
               alt="profil"
@@ -145,23 +167,13 @@ const Chat = () => {
               className="my_profil"
             />
             <div className="imo-icon">
-              <img
-                  src={Imo}
-                  alt="profil"
-                  title="profil"
-                  className="imo-icon"
-                />
-           </div>
-           <div className="close-icon">
-            <img
-                src={Close}
-                alt="profil"
-                title="profil"
-                className="close"
-              />
-           </div>
+              <img src={Imo} alt="profil" title="profil" className="imo-icon" />
+            </div>
+            <Link to="/" className="close-icon" onClick={removeLocastorage}>
+              <img src={Close} alt="profil" title="profil" className="close" />
+            </Link>
           </div>
-          
+
           <div className="recent">
             {/* AiOutlineSearch */}
             <div className="recent-search">
@@ -220,7 +232,7 @@ const Chat = () => {
                   <div key={message._id}>
                     <Message
                       message={message}
-                      own={message.senderId === user._id}
+                      own={message.senderId !== user._id}
                     />
                   </div>
                 ))}
