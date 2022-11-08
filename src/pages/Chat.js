@@ -3,7 +3,7 @@ import {
   AiOutlineSend,
   AiOutlineSearch, // AiOutlineCamera,
 } from "react-icons/ai";
-import profil from "../images/Jeannot.jpeg";
+import Users from "../images/users.png";
 import Message from "../components/Message";
 import axios from "axios";
 import { io } from "socket.io-client";
@@ -22,6 +22,7 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState("");
   const [arriveMessage, setArriveMessage] = useState(null);
   const [dash, setdash] = useState(null);
+  const [recent, setRecent] = useState(false);
   const socket = useRef();
 
   //Id User
@@ -155,61 +156,75 @@ const Chat = () => {
     setdash(true);
   }
 
+  function showDashboard() {
+    setRecent(true);
+  }
+
   return (
     <div className="chat">
       <div className="sidebar">
         <div className="content-sidebar">
           <div className="small-sidebar" onClick={showDashboard}>
-            <img
-              src={user.picture}
-              alt="profil"
-              title="profil"
-              className="my_profil"
-            />
-            <div className="imo-icon">
-              <img src={Imo} alt="profil" title="profil" className="imo-icon" />
+            <div className="profil-user">
+              <img
+                src={user.picture}
+                alt="profil"
+                title="profil"
+                className="my_profil"
+              />
             </div>
+            <Link className="imo-icon">
+              <img src={Imo} alt="profil" title="profil" className="imo-icon" />
+            </Link>
             <Link to="/" className="close-icon" onClick={removeLocastorage}>
               <img src={Close} alt="profil" title="profil" className="close" />
             </Link>
           </div>
-
-          <div className="recent">
-            {/* AiOutlineSearch */}
-            <div className="recent-search">
-              <AiOutlineSearch className="icon-search" />
-              <input type="text" placeholder="Search" className="search" />
-            </div>
-            <h4>Recent</h4>
-            <div className="recent-down">
-              {users?.user?.map((listUsers) => (
-                <div
-                  className="friend"
-                  key={listUsers._id}
-                  onClick={() => showUser(listUsers)}
-                >
-                  <div className="my-friend">
-                    <img
-                      src={listUsers.picture || Profil}
-                      alt="profil"
-                      title="profil"
-                      className="profil-recent"
-                    />
-                    <div className="name-friend">
-                      <span className="name">{listUsers.name}</span>
-                      <div className="alert-msg">Last message</div>
+          {recent ? (
+            <div className="recent">
+              {/* AiOutlineSearch */}
+              <div className="recent-search">
+                <AiOutlineSearch className="icon-search" />
+                <input type="text" placeholder="Search" className="search" />
+              </div>
+              <h4>Recent</h4>
+              <div className="recent-down">
+                {users?.user?.map((listUsers) => (
+                  <div
+                    className="friend"
+                    key={listUsers._id}
+                    onClick={() => showUser(listUsers)}
+                  >
+                    <div className="my-friend">
+                      <img
+                        src={listUsers.picture || Profil}
+                        alt="profil"
+                        title="profil"
+                        className="profil-recent"
+                      />
+                      <div className="name-friend">
+                        <span className="name">{listUsers.name}</span>
+                        <div className="alert-msg">Last message</div>
+                      </div>
+                    </div>
+                    <div className="container-hr">
+                      <div className="hr"></div>
                     </div>
                   </div>
-                  <div className="container-hr">
-                    <div className="hr"></div>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="open-list">
+              <h2 className="users-list">Open recent users list. </h2>
+              {/* <p className="text-list"> For showing that list you mast click on icon.</p> */}
+              <img className="recent-illust" src={Users} alt="" />
+            </div>
+          )}
         </div>
       </div>
-      <div className="container-message">
+      {
+        recent ? <div className="container-message">
         {currentChat ? (
           <>
             <div className="message">
@@ -259,7 +274,9 @@ const Chat = () => {
         ) : (
           <span className="no-chat">Open a Conversation to start a chat</span>
         )}
-      </div>
+      </div> : null
+      }
+      
     </div>
   );
 };

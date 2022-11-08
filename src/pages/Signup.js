@@ -1,7 +1,7 @@
 import { Button, Row, Form, Col, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../styles/login.css";
-import Bot from "../images/bot.jpeg";
+import Profil from "../images/profil.png";
 import { useState } from "react";
 import axios from "axios";
 import React from "react";
@@ -82,7 +82,7 @@ const Signup = () => {
             <h1 className="tetxt-center">Create account</h1>
             <div className="signup-profile-pic__container">
               <img
-                src={imagePreview || Bot}
+                src={imagePreview || Profil}
                 className="signup-profile-pic"
                 alt="img"
               />

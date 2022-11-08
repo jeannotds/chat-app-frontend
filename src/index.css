@@ -12,16 +12,20 @@ code {
     monospace;
 }
 
-
 .login__bg{
   background-image: url('images/signup.png');
+  height: 92vh;
+  background-position: center;
+  background-size: 350px;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
 .signup__bg{
   background-image: url('images/signup.png');
   height: 92vh;
   background-position: center;
-  background-size: cover;
+  background-size: 350px;
   background-repeat: no-repeat;
   overflow: hidden;
 }
@@ -30,8 +34,7 @@ code {
 .signup-profile-pic{
   border-radius: 100%;
   width: 80px;
-
-  margin: 20px 0 0 95px;
+  margin: 20px 0 20px 3px;
 }
 
 .signup-profile-pic__container{
@@ -86,6 +89,13 @@ code {
   align-items: center;
 }
 
+.profil-user{
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  position: relative;
+}
+
 .my_profil{
   width: 80px;
   height: 80px;
@@ -96,6 +106,27 @@ code {
   object-fit: cover;
 }
 
+.users-list{
+  margin-top: 100px;
+  margin-left: 20px;
+  font-size: 20px;
+}
+
+.recent-illust{
+  width: 300px;
+  margin:  10px auto;
+}
+
+.open-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.text-list{
+  margin-top: 30px;
+  margin-left: 20px;
+  font-size: 20px;
+}
 .profil-recent{
     width: 45px;
     height: 45px;

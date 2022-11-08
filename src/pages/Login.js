@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Profil from "../images/profil.png";
 
 const Login = ({ user, setUser }) => {
   // const { setUser } = useContext(userContext);
@@ -95,7 +96,7 @@ const Login = ({ user, setUser }) => {
             </div>
           </Form>
         </Col>
-        <Col md={5} className="signup__bg"></Col>
+        <Col md={5} className="login__bg"></Col>
       </Row>
     </Container>
   );
