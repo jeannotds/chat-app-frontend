@@ -9,6 +9,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import Close from "../images/deconnect.png";
 import Imo from "../images/imo.png";
+import Profil from "../images/profil.png";
 import { Link } from "react-router-dom";
 
 const Chat = () => {
@@ -25,6 +26,7 @@ const Chat = () => {
 
   //Id User
   const user = JSON.parse(localStorage.getItem("user"));
+  console.log("USER => ", user);
 
   // const currentChat
 
@@ -159,7 +161,7 @@ const Chat = () => {
         <div className="content-sidebar">
           <div className="small-sidebar" onClick={showDashboard}>
             <img
-              src={profil}
+              src={user.picture}
               alt="profil"
               title="profil"
               className="my_profil"
@@ -188,7 +190,7 @@ const Chat = () => {
                 >
                   <div className="my-friend">
                     <img
-                      src={profil}
+                      src={listUsers.picture || Profil}
                       alt="profil"
                       title="profil"
                       className="profil-recent"
@@ -213,7 +215,7 @@ const Chat = () => {
             <div className="message">
               <div className="my-image">
                 <img
-                  src={profil}
+                  src={listeUser.picture || Profil}
                   alt="profil"
                   title="profil"
                   className="my_profil_msg"
