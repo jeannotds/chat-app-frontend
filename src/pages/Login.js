@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import Profil from "../images/profil.png";
 
 const Login = ({ user, setUser }) => {
   // const { setUser } = useContext(userContext);

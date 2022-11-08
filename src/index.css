@@ -400,6 +400,25 @@ flex-direction: column;
   background-color: #eaeaea;
 }
 
+.input-bog{
+  position: relative;
+}
+.camera{
+  position: absolute;
+  top: 0;
+  right: 15px;
+  top: 7px;
+  font-size: 20px;
+}
+
+.file-camera{
+  position: absolute;
+}
+
+/* .file{
+  height: 100px;
+  position: absolute;
+} */
 /* .no-chat{
   position: absolute;
 } */

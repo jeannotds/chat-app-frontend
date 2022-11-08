@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   AiOutlineSend,
-  AiOutlineSearch, // AiOutlineCamera,
+  AiOutlineSearch, 
+  AiOutlineCamera
 } from "react-icons/ai";
 import Users from "../images/users.png";
 import Message from "../components/Message";
@@ -21,44 +22,24 @@ const Chat = () => {
   const [currentChat, setCurrentChat] = useState(null);
   const [newMessage, setNewMessage] = useState("");
   const [arriveMessage, setArriveMessage] = useState(null);
-  const [dash, setdash] = useState(null);
   const [recent, setRecent] = useState(false);
   const socket = useRef();
 
-  //Id User
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log("USER => ", user);
-
-  // const currentChat
 
   useEffect(() => {
     socket.current = io("ws://localhost:3005");
     socket.current.on("getMessage", (data) => {
-      // console.log("data receive: ", data);
-      // setArriveMessage(data);
       setArriveMessage({
         senderId: data.senderId,
-        // chatId: data.chatId,
         text: data.text,
         createdAt: Date.now(),
       });
     });
   }, []);
 
-  console.log("arriveMessage : ", arriveMessage);
-
-  useEffect(() => {
-    // arriveMessage &&
-  }, [arriveMessage]);
-
-  console.log("arriveMessage : ", arriveMessage);
-  console.log("Liste User", listeUser);
-
   useEffect(() => {
     socket.current.emit("addUser", user._id);
-    // socket.current.on("getUsers", (users) => {
-    //   console.log("users : ", users);
-    // });
   }, [user]);
 
   const showUser = (listUsers) => {
@@ -66,12 +47,6 @@ const Chat = () => {
     setCurrentChat(listUsers);
   };
 
-  // console.log("CURRENT CHAT", currentChat);
-  // console.log("Messages current", messages);
-
-  // console.log("ID USER COLABORATEUR :  ", listeUser._id); // ID USER CONVERSATION
-
-  //U
   useEffect(() => {
     const getChats = async () => {
       try {
@@ -86,7 +61,6 @@ const Chat = () => {
     getChats();
   }, [user._id]);
 
-  //CONVERSATION
   useEffect(() => {
     axios
       .get(`http://localhost:3005/message/${user._id}/${listeUser._id}`)
@@ -95,10 +69,6 @@ const Chat = () => {
       })
       .catch((err) => console.log(err, "erreur erreur"));
   }, [newMessage, user._id, listeUser._id]);
-
-  // console.log(messages);
-
-  //SEND A MESSAGE
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -109,11 +79,8 @@ const Chat = () => {
       text: newMessage,
     };
     axios.post(`http://localhost:3005/message`, myMessage);
-
     setNewMessage("");
-    // console.log(newMessage);
 
-    // send Socket
     socket.current.emit("sendMessage", {
       senderId: user._id,
       chatId: listeUser._id,
@@ -150,10 +117,6 @@ const Chat = () => {
       alert("Action canceled");
       e.preventDefault();
     }
-  }
-
-  function showDashboard() {
-    setdash(true);
   }
 
   function showDashboard() {
@@ -217,7 +180,6 @@ const Chat = () => {
           ) : (
             <div className="open-list">
               <h2 className="users-list">Open recent users list. </h2>
-              {/* <p className="text-list"> For showing that list you mast click on icon.</p> */}
               <img className="recent-illust" src={Users} alt="" />
             </div>
           )}
@@ -255,14 +217,16 @@ const Chat = () => {
               <form className="form">
                 <hr></hr>
                 <div className="action-message">
-                  {/* <AiOutlineCamera /> */}
                   <div className="input-bog">
                     <input
                       type="text"
                       placeholder="Ecrire un message..."
                       onChange={(e) => setNewMessage(e.target.value)}
                       value={newMessage}
+                      className="input-msg"
                     />
+                    <input type="file" className="file-camera" />
+                    <AiOutlineCamera className="camera" />
                   </div>
                   <button onClick={sendMessage}>
                     <AiOutlineSend />
