@@ -55,36 +55,20 @@ const Signup = () => {
     console.log(url);
 
     // Signup the user
-    if (
-      e.target[0].value === "" ||
-      e.target[1].value === "" ||
-      e.target[2].value === ""
-    ) {
-      setName("");
-      setEmail("");
-      setPassword("");
-      console.log("veuillez remplir tous les champs");
-    } else {
-      let body = {
+    axios
+      .post("http://localhost:3005/auth/signup", {
         name,
         email,
         password,
-      };
-      axios({
-        method: "post",
-        url: "http://localhost:3008/api/auth",
-        data: body,
+        picture: url,
       })
-        .then((res) => {
-          console.log("res", res);
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
-    }
-    setName("");
-    setEmail("");
-    setPassword("");
+      .then((data) => {
+        console.log("Data", data);
+        alert("Data save!!!!!!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -97,7 +81,11 @@ const Signup = () => {
           <Form onSubmit={handleSignup}>
             <h1 className="tetxt-center">Create account</h1>
             <div className="signup-profile-pic__container">
-              <img src={imagePreview || Bot} className="signup-profile-pic" alt="img" />
+              <img
+                src={imagePreview || Bot}
+                className="signup-profile-pic"
+                alt="img"
+              />
               <label htmlFor="image-upload" className="image-upload-label">
                 <i className="fas fa-plus-circle add-picture-icon plus">+</i>
               </label>
@@ -139,16 +127,16 @@ const Signup = () => {
                 name="password"
               />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group>
+            </Form.Group> */}
             <Button variant="primary" type="submit">
               {/* Create acoount */}
               {uploadImg ? "Signing you..." : "Signup"}
             </Button>
             <div className="py-4">
               <p className="text-center">
-                Already have account ? <Link to="/login">Login</Link>
+                Already have account ? <Link to="/">Login</Link>
               </p>
             </div>
           </Form>

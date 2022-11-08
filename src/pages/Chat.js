@@ -63,10 +63,8 @@ const Chat = () => {
     setCurrentChat(listUsers);
   };
 
-  // const =
-
-  console.log("CURRENT CHAT", currentChat);
-  console.log("Messages current", messages);
+  // console.log("CURRENT CHAT", currentChat);
+  // console.log("Messages current", messages);
 
   // console.log("ID USER COLABORATEUR :  ", listeUser._id); // ID USER CONVERSATION
 

@@ -90,7 +90,7 @@ const Login = ({ user, setUser }) => {
             </Button>
             <div className="py-4">
               <p className="text-center">
-                As-tu deja un compte ? <Link to="/signup">Login</Link>
+                As-tu deja un compte ? <Link to="/signup">Sign up</Link>
               </p>
             </div>
           </Form>
