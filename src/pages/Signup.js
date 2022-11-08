@@ -1,5 +1,5 @@
 import { Button, Row, Form, Col, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/login.css";
 import Profil from "../images/profil.png";
 import { useState } from "react";
@@ -15,6 +15,8 @@ const Signup = () => {
   const [image, setImage] = useState(null);
   const [uploadImg, setUploadImg] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
+
+  let navigate = useNavigate();
 
   function validateImg(e) {
     const file = e.target.files[0];
@@ -63,8 +65,13 @@ const Signup = () => {
         picture: url,
       })
       .then((data) => {
-        console.log("Data", data);
-        alert("Data save!!!!!!");
+        // console.log("Data", data);
+        // alert("Data save!!!!!!");
+        navigate("/");
+        setName("");
+        setEmail("");
+        setPassword("");
+        setImage("");
       })
       .catch((err) => {
         console.log(err);
