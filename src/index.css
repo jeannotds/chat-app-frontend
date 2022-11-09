@@ -436,6 +436,13 @@ code {
   position: absolute;
 }
 
+.send-image{
+  height: 35px;
+  width: 40px;
+  margin: 0 4px;
+  border-radius: 100%;
+}
+
 /* .file{
   height: 100px;
   position: absolute;

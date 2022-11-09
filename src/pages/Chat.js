@@ -23,6 +23,9 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState("");
   const [arriveMessage, setArriveMessage] = useState(null);
   const [recent, setRecent] = useState(false);
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [uploadImg, setUploadImg] = useState(false);
   const socket = useRef();
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -70,8 +73,54 @@ const Chat = () => {
       .catch((err) => console.log(err, "erreur erreur"));
   }, [newMessage, user._id, listeUser._id]);
 
-  const sendMessage = (e) => {
+  function validateImg(e) {
+    const file = e.target.files[0];
+    if (file.size >= 1048576) {
+      return alert("Max file size is 1mb");
+    } else {
+      setImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  }
+
+  async function uploadImage() {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "yp1zbtgx");
+    try {
+      setUploadImg(true);
+      let res = await fetch(
+        "https://api.cloudinary.com/v1_1/dwxnmwhdl/image/upload",
+        {
+          method: "post",
+          body: data,
+        }
+      );
+      const urlData = await res.json();
+      setUploadImg(false);
+      return urlData.url;
+    } catch (error) {
+      setUploadImg(false);
+      console.log(error);
+    }
+  }
+
+  // async function handleSignup(e) {
+  //   e.preventDefault();
+  //   if (!image) return alert("Please upload your profile picture");
+  //   const url = await uploadImage();
+  //   console.log("url : ", url);
+  // }
+
+  const sendMessage = async (e) => {
     e.preventDefault();
+
+    if (!image) return alert("Please upload your profile picture");
+    const url = await uploadImage();
+    // setNewMessage(url);
+    console.log("url : ", url);
+
+    setImage("");
     console.log(newMessage);
     if (newMessage !== "") {
       let myMessage = {
@@ -81,7 +130,6 @@ const Chat = () => {
       };
       axios.post(`http://localhost:3005/message`, myMessage);
       setNewMessage("");
-
       socket.current.emit("sendMessage", {
         senderId: user._id,
         chatId: listeUser._id,
@@ -94,20 +142,6 @@ const Chat = () => {
     socket.current.on("getMessage", (data) => {});
   }, []);
 
-  // useEffect(() => {
-  //   axios
-  //     .post(`http://localhost:3005/message`, {
-  //       senderId: user._id,
-  //       receiveId: listeUser._id,
-  //       messageSend: messageSend,
-  //     })
-  //     .then((res) => {
-  //       setMessageSend(messageSend);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-
-  //Remove Localstarage
   function removeLocastorage(e) {
     let isExecuted = window.confirm("Are you sure to execute this action?");
 
@@ -227,12 +261,32 @@ const Chat = () => {
                         value={newMessage}
                         className="input-msg"
                       />
-                      <input type="file" className="file-camera" />
+                      <input
+                        type="file"
+                        className="file-camera"
+                        // hidden
+                        accept="image/png, image/jpeg"
+                        onChange={validateImg}
+                      />
                       <AiOutlineCamera className="camera" />
                     </div>
+                    {image ? (
+                      <div className="sendImage">
+                        <img
+                          src={imagePreview}
+                          alt=""
+                          title=""
+                          className="send-image"
+                        />
+                      </div>
+                    ) : null}
+
                     <button onClick={sendMessage}>
                       <AiOutlineSend />
                     </button>
+                    {/* <button onClick={handleSignup}>
+                      <AiOutlineSend />
+                    </button> */}
                   </div>
                 </form>
               </div>
@@ -247,3 +301,15 @@ const Chat = () => {
 };
 
 export default Chat;
+
+/*
+
+
+   axios
+      .post("https://api.cloudinary.com/v1_1/dwxnmwhdl/image/upload", { data })
+      .then((data) => {
+        console.log("DATA : ", data);
+      })
+      .catch((err) => console.log(err));
+
+*/
