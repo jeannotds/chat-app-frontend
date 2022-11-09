@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   AiOutlineSend,
-  AiOutlineSearch, 
-  AiOutlineCamera
+  AiOutlineSearch,
+  AiOutlineCamera,
 } from "react-icons/ai";
 import Users from "../images/users.png";
 import Message from "../components/Message";
@@ -72,20 +72,22 @@ const Chat = () => {
 
   const sendMessage = (e) => {
     e.preventDefault();
+    console.log(newMessage);
+    if (newMessage !== "") {
+      let myMessage = {
+        senderId: user._id,
+        chatId: listeUser._id,
+        text: newMessage,
+      };
+      axios.post(`http://localhost:3005/message`, myMessage);
+      setNewMessage("");
 
-    let myMessage = {
-      senderId: user._id,
-      chatId: listeUser._id,
-      text: newMessage,
-    };
-    axios.post(`http://localhost:3005/message`, myMessage);
-    setNewMessage("");
-
-    socket.current.emit("sendMessage", {
-      senderId: user._id,
-      chatId: listeUser._id,
-      text: newMessage,
-    });
+      socket.current.emit("sendMessage", {
+        senderId: user._id,
+        chatId: listeUser._id,
+        text: newMessage,
+      });
+    }
   };
 
   useEffect(() => {
@@ -130,7 +132,7 @@ const Chat = () => {
           <div className="small-sidebar" onClick={showDashboard}>
             <div className="profil-user">
               <img
-                src={user.picture}
+                src={user.picture || Profil}
                 alt="profil"
                 title="profil"
                 className="my_profil"
@@ -185,62 +187,61 @@ const Chat = () => {
           )}
         </div>
       </div>
-      {
-        recent ? <div className="container-message">
-        {currentChat ? (
-          <>
-            <div className="message">
-              <div className="my-image">
-                <img
-                  src={listeUser.picture || Profil}
-                  alt="profil"
-                  title="profil"
-                  className="my_profil_msg"
-                />
-                <div className="Online">
-                  <div className="online-name">{listeUser.name}</div>
-                  <div className="if-online">Online</div>
+      {recent ? (
+        <div className="container-message">
+          {currentChat ? (
+            <>
+              <div className="message">
+                <div className="my-image">
+                  <img
+                    src={listeUser.picture || Profil}
+                    alt="profil"
+                    title="profil"
+                    className="my_profil_msg"
+                  />
+                  <div className="Online">
+                    <div className="online-name">{listeUser.name}</div>
+                    <div className="if-online">Online</div>
+                  </div>
                 </div>
-              </div>
-              <hr className="list-hr"></hr>
+                <hr className="list-hr"></hr>
 
-              <div className="list-message">
-                {messages.map((message) => (
-                  <div key={message._id}>
-                    <Message
-                      message={message}
-                      own={message.senderId !== user._id}
-                    />
-                  </div>
-                ))}
-              </div>
-              <form className="form">
-                <hr></hr>
-                <div className="action-message">
-                  <div className="input-bog">
-                    <input
-                      type="text"
-                      placeholder="Ecrire un message..."
-                      onChange={(e) => setNewMessage(e.target.value)}
-                      value={newMessage}
-                      className="input-msg"
-                    />
-                    <input type="file" className="file-camera" />
-                    <AiOutlineCamera className="camera" />
-                  </div>
-                  <button onClick={sendMessage}>
-                    <AiOutlineSend />
-                  </button>
+                <div className="list-message">
+                  {messages.map((message) => (
+                    <div key={message._id}>
+                      <Message
+                        message={message}
+                        own={message.senderId !== user._id}
+                      />
+                    </div>
+                  ))}
                 </div>
-              </form>
-            </div>
-          </>
-        ) : (
-          <span className="no-chat">Open a Conversation to start a chat</span>
-        )}
-      </div> : null
-      }
-      
+                <form className="form">
+                  <hr></hr>
+                  <div className="action-message">
+                    <div className="input-bog">
+                      <input
+                        type="text"
+                        placeholder="Ecrire un message..."
+                        onChange={(e) => setNewMessage(e.target.value)}
+                        value={newMessage}
+                        className="input-msg"
+                      />
+                      <input type="file" className="file-camera" />
+                      <AiOutlineCamera className="camera" />
+                    </div>
+                    <button onClick={sendMessage}>
+                      <AiOutlineSend />
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </>
+          ) : (
+            <span className="no-chat">Open a Conversation to start a chat</span>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -104,6 +104,7 @@ code {
   margin: 20px auto;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.76);
   object-fit: cover;
+  background-color: white;
 }
 
 .users-list{
@@ -299,6 +300,8 @@ code {
   height: 50px;
   border-radius: 100%;
   display: flex;
+  /* object-fit: cover;
+  background-position: 0%; */
 }
 
 .my-image{
@@ -336,12 +339,12 @@ code {
 }
 
 .form{
-position: absolute;
-bottom: 0;
-width: 92%;
-margin: 20px 0 30px;
-display: flex;
-flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  width: 92%;
+  margin: 20px 0 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 .action-message{
@@ -352,19 +355,37 @@ flex-direction: column;
 }
 
 .input-bog{
-  width: 89%;
+  width: 87%;
+  display: flex;
+  flex-direction: column;
+  outline: none;
 }
 
-.form input{
+.input-msg{
   margin-right:10px;
   border: 1px solid black;
   border-radius: 5px;
-  width: 99%;
   border: 2px solid #ccc;
   padding: 3px 8px;
   outline: none;
-  
+  width: 100%;
+  position: absolute;
 }
+
+.file-camera{
+  width: 16px;
+  height: 13px;
+  position: absolute;
+  top: 10px;
+  right: 17px;
+  bottom: 10px;
+  z-index: 10;
+  opacity: 0;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
 .form hr{
   width: 100%;
   margin-bottom: 25px;
@@ -375,8 +396,8 @@ flex-direction: column;
   border: none;
   background-color: #1966ff;
   color: #fff;
-  /* height: 30px; */
-  width: 11%;
+  height: 35px;
+  width: 10%;
   
 }
 
