@@ -20,7 +20,8 @@ const Chat = () => {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
-  const [newMessage, setNewMessage] = useState("");
+  const [newMessage, setNewMessage] = useState([]);
+  const [newImage, setNewImage] = useState([]);
   const [arriveMessage, setArriveMessage] = useState(null);
   const [recent, setRecent] = useState(false);
   const [image, setImage] = useState(null);
@@ -36,6 +37,7 @@ const Chat = () => {
       setArriveMessage({
         senderId: data.senderId,
         text: data.text,
+        image: data.image,
         createdAt: Date.now(),
       });
     });
@@ -71,7 +73,8 @@ const Chat = () => {
         setMessages(res.data);
       })
       .catch((err) => console.log(err, "erreur erreur"));
-  }, [newMessage, user._id, listeUser._id]);
+  }, [newMessage, newImage, user._id, listeUser._id]);
+  console.log("messages Message : ", messages);
 
   function validateImg(e) {
     const file = e.target.files[0];
@@ -83,60 +86,87 @@ const Chat = () => {
     }
   }
 
-  async function uploadImage() {
-    const data = new FormData();
-    data.append("file", image);
-    data.append("upload_preset", "yp1zbtgx");
-    try {
-      setUploadImg(true);
-      let res = await fetch(
-        "https://api.cloudinary.com/v1_1/dwxnmwhdl/image/upload",
-        {
-          method: "post",
-          body: data,
-        }
-      );
-      const urlData = await res.json();
-      setUploadImg(false);
-      return urlData.url;
-    } catch (error) {
-      setUploadImg(false);
-      console.log(error);
-    }
-  }
-
-  // async function handleSignup(e) {
-  //   e.preventDefault();
-  //   if (!image) return alert("Please upload your profile picture");
-  //   const url = await uploadImage();
-  //   console.log("url : ", url);
+  // async function uploadImage() {
+  //   const data = new FormData();
+  //   data.append("file", image);
+  //   data.append("upload_preset", "yp1zbtgx");
+  //   try {
+  //     setUploadImg(true);
+  //     let res = await fetch(
+  //       "https://api.cloudinary.com/v1_1/dwxnmwhdl/image/upload",
+  //       {
+  //         method: "post",
+  //         body: data,
+  //       }
+  //     );
+  //     const urlData = await res.json();
+  //     setUploadImg(false);
+  //     return urlData.url;
+  //   } catch (error) {
+  //     setUploadImg(false);
+  //     console.log(error);
+  //   }
   // }
+  // console.log("ssssss : ", )
+
+  /*
+    async function handleSignup(e) {
+      e.preventDefault();
+      if (image) {
+        const urlCloud = await uploadImage();
+        console.log("url : ", urlCloud);
+        setNewImage(urlCloud);
+        setImagePreview("");
+        setImage(null);
+        console.log("New Image : ", newImage);
+      }
+    }
+  */
+
+  const fromData = new FormData();
+  fromData.append("file", image);
+  fromData.append("upload_preset", "yp1zbtgx");
 
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    if (!image) return alert("Please upload your profile picture");
-    const url = await uploadImage();
-    // setNewMessage(url);
-    console.log("url : ", url);
+    if (newMessage !== "" || image !== "") {
+      let img = null;
 
-    setImage("");
-    console.log(newMessage);
-    if (newMessage !== "") {
-      let myMessage = {
+      if (image) {
+        await axios({
+          method: "post",
+          url: "https://api.cloudinary.com/v1_1/dwxnmwhdl/image/upload",
+          data: fromData,
+        })
+          .then((res) => {
+            img = res.data.secure_url;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
+      axios.post(`http://localhost:3005/message`, {
         senderId: user._id,
         chatId: listeUser._id,
         text: newMessage,
-      };
-      axios.post(`http://localhost:3005/message`, myMessage);
+        image: img,
+      });
+
       setNewMessage("");
+      setImagePreview(null);
+      setImage(null);
+
       socket.current.emit("sendMessage", {
         senderId: user._id,
         chatId: listeUser._id,
         text: newMessage,
+        // image: urlCloud,
       });
     }
   };
+  console.log("setNewImage : ", newImage);
 
   useEffect(() => {
     socket.current.on("getMessage", (data) => {});
