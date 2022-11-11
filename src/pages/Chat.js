@@ -86,43 +86,6 @@ const Chat = () => {
     }
   }
 
-  // async function uploadImage() {
-  //   const data = new FormData();
-  //   data.append("file", image);
-  //   data.append("upload_preset", "yp1zbtgx");
-  //   try {
-  //     setUploadImg(true);
-  //     let res = await fetch(
-  //       "https://api.cloudinary.com/v1_1/dwxnmwhdl/image/upload",
-  //       {
-  //         method: "post",
-  //         body: data,
-  //       }
-  //     );
-  //     const urlData = await res.json();
-  //     setUploadImg(false);
-  //     return urlData.url;
-  //   } catch (error) {
-  //     setUploadImg(false);
-  //     console.log(error);
-  //   }
-  // }
-  // console.log("ssssss : ", )
-
-  /*
-    async function handleSignup(e) {
-      e.preventDefault();
-      if (image) {
-        const urlCloud = await uploadImage();
-        console.log("url : ", urlCloud);
-        setNewImage(urlCloud);
-        setImagePreview("");
-        setImage(null);
-        console.log("New Image : ", newImage);
-      }
-    }
-  */
-
   const fromData = new FormData();
   fromData.append("file", image);
   fromData.append("upload_preset", "yp1zbtgx");
@@ -130,7 +93,7 @@ const Chat = () => {
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    if (newMessage !== "" || image !== "") {
+    if (newMessage.length > 0 || image){
       let img = null;
 
       if (image) {

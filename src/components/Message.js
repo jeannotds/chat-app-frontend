@@ -5,12 +5,14 @@ import "../styles/messahe.css";
 
 // eslint-disable-next-line react/prop-types
 const Message = ({ own, message }) => {
-  // console.log("Message : ", message);
   return (
     <div className={own ? "message-1 own" : "message-1"}>
       <div className="messageTop">
         {/* <img src=''  alt='profil' title=''/> */}
-        <p className="messageText">{message.text}</p>
+        {
+          message?.text ? <p className="messageText">{message?.text}</p> : null
+        }
+        
       </div>
         
 
