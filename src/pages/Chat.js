@@ -16,7 +16,6 @@ import { Link } from "react-router-dom";
 const Chat = () => {
   const [listeUser, setListeUser] = useState({});
   // eslint-disable-next-line no-unused-vars
-  const [chats, setChat] = useState([]);
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
@@ -29,6 +28,7 @@ const Chat = () => {
   const [imgs, setImgs] = useState([]);
 
   const user = JSON.parse(localStorage.getItem("user"));
+
 
   useEffect(() => {
     socket.current = io("ws://localhost:3005");
@@ -69,10 +69,10 @@ const Chat = () => {
     axios
       .get(`http://localhost:3005/message/${user._id}/${listeUser._id}`)
       .then((res) => {
-        setMessages(res.data);
+        setMessages(res.data, arriveMessage);
       })
       .catch((err) => console.log(err, "erreur erreur"));
-  }, [newMessage, imgs, user._id, listeUser._id]);
+  }, [newMessage, imgs, user._id, listeUser._id, arriveMessage]);
 
   function validateImg(e) {
     const file = e.target.files[0];
@@ -152,6 +152,9 @@ const Chat = () => {
   function showDashboard() {
     setRecent(true);
   }
+
+  console.log("Messages ; ", messages);
+  console.log("arriveMessage ; ", arriveMessage);
 
   return (
     <div className="chat">
