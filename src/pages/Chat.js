@@ -26,9 +26,9 @@ const Chat = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const socket = useRef();
   const [imgs, setImgs] = useState([]);
+  const scrollRef = useRef();
 
   const user = JSON.parse(localStorage.getItem("user"));
-
 
   useEffect(() => {
     socket.current = io("ws://localhost:3005");
@@ -153,6 +153,10 @@ const Chat = () => {
     setRecent(true);
   }
 
+  useEffect(() => {
+    scrollRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   console.log("Messages ; ", messages);
   console.log("arriveMessage ; ", arriveMessage);
 
@@ -239,7 +243,7 @@ const Chat = () => {
 
                 <div className="list-message">
                   {messages.map((message) => (
-                    <div key={message._id}>
+                    <div key={message._id} ref={scrollRef}>
                       <Message
                         message={message}
                         own={message.senderId !== user._id}
