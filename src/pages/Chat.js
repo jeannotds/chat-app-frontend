@@ -20,14 +20,13 @@ const Chat = () => {
   const [users, setUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
-  const [newMessage, setNewMessage] = useState([]);
-  const [newImage, setNewImage] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
   const [arriveMessage, setArriveMessage] = useState(null);
   const [recent, setRecent] = useState(false);
   const [image, setImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
-  const [uploadImg, setUploadImg] = useState(false);
   const socket = useRef();
+  const [imgs, setImgs] = useState([]);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -73,8 +72,7 @@ const Chat = () => {
         setMessages(res.data);
       })
       .catch((err) => console.log(err, "erreur erreur"));
-  }, [newMessage, newImage, user._id, listeUser._id]);
-  console.log("messages Message : ", messages);
+  }, [newMessage, imgs, user._id, listeUser._id]);
 
   function validateImg(e) {
     const file = e.target.files[0];
@@ -93,7 +91,7 @@ const Chat = () => {
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    if (newMessage.length > 0 || image){
+    if (newMessage.length > 0 || image) {
       let img = null;
 
       if (image) {
@@ -104,6 +102,8 @@ const Chat = () => {
         })
           .then((res) => {
             img = res.data.secure_url;
+            setImgs(img);
+            console.log("IMG : ", img);
           })
           .catch((err) => {
             console.log(err);
@@ -113,7 +113,7 @@ const Chat = () => {
       axios.post(`http://localhost:3005/message`, {
         senderId: user._id,
         chatId: listeUser._id,
-        text: newMessage,
+        text: newMessage || "",
         image: img,
       });
 
@@ -125,11 +125,12 @@ const Chat = () => {
         senderId: user._id,
         chatId: listeUser._id,
         text: newMessage,
-        // image: urlCloud,
+        image: img,
       });
+    } else {
+      alert("No");
     }
   };
-  console.log("setNewImage : ", newImage);
 
   useEffect(() => {
     socket.current.on("getMessage", (data) => {});
@@ -294,15 +295,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
-/*
-
-
-   axios
-      .post("https://api.cloudinary.com/v1_1/dwxnmwhdl/image/upload", { data })
-      .then((data) => {
-        console.log("DATA : ", data);
-      })
-      .catch((err) => console.log(err));
-
-*/
