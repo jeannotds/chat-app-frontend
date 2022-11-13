@@ -26,6 +26,7 @@ const Chat = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const socket = useRef();
   const [imgs, setImgs] = useState([]);
+  const [inputSearch, setInputSearch] = useState("");
   const scrollRef = useRef();
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -157,8 +158,10 @@ const Chat = () => {
     scrollRef?.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  console.log("Messages ; ", messages);
-  console.log("arriveMessage ; ", arriveMessage);
+  const inputHandle = (e) => {
+    setInputSearch(e.target.value.toLowerCase());
+    // alert(inputSearch);
+  };
 
   return (
     <div className="chat">
@@ -185,33 +188,45 @@ const Chat = () => {
               {/* AiOutlineSearch */}
               <div className="recent-search">
                 <AiOutlineSearch className="icon-search" />
-                <input type="text" placeholder="Search" className="search" />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  className="search"
+                  onChange={inputHandle}
+                />
               </div>
               <h4>Recent</h4>
               <div className="recent-down">
-                {users?.user?.map((listUsers) => (
-                  <div
-                    className="friend"
-                    key={listUsers._id}
-                    onClick={() => showUser(listUsers)}
-                  >
-                    <div className="my-friend">
-                      <img
-                        src={listUsers.picture || Profil}
-                        alt="profil"
-                        title="profil"
-                        className="profil-recent"
-                      />
-                      <div className="name-friend">
-                        <span className="name">{listUsers.name}</span>
-                        <div className="alert-msg">Last message</div>
+                {users?.user
+                  ?.filter((element) => {
+                    if (element === "") {
+                      return element;
+                    } else {
+                      return element.name.toLowerCase().includes(inputSearch);
+                    }
+                  }).map((listUsers) => (
+                    <div
+                      className="friend"
+                      key={listUsers._id}
+                      onClick={() => showUser(listUsers)}
+                    >
+                      <div className="my-friend">
+                        <img
+                          src={listUsers.picture || Profil}
+                          alt="profil"
+                          title="profil"
+                          className="profil-recent"
+                        />
+                        <div className="name-friend">
+                          <span className="name">{listUsers.name}</span>
+                          <div className="alert-msg">Last message</div>
+                        </div>
+                      </div>
+                      <div className="container-hr">
+                        <div className="hr"></div>
                       </div>
                     </div>
-                    <div className="container-hr">
-                      <div className="hr"></div>
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           ) : (
