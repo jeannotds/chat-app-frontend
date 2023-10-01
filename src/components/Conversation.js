@@ -8,10 +8,8 @@ export default function Conversation({ data, currentUser }) {
 
     useEffect(() => {
         const userId = data.members.find(id => id !== currentUser);
-        console.log('userId : ', userId);
         axios.get(`http://localhost:8001/api/user/${userId}`)
         .then((res) => {
-            console.log(res.data);
             setUserData(res.data);
         }).catch((err) => {
             throw err;

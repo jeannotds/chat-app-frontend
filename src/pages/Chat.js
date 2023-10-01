@@ -18,7 +18,6 @@ const Chat = ({user}) => {
     axios.get(`http://localhost:8001/api/chat/${currentUser._id}`)
     .then((res) => {
       setUserChats(res.data);
-      console.log('userChats: ', res.data.chat);
     })
     .catch((err) => {
       throw err;
@@ -45,13 +44,13 @@ const Chat = ({user}) => {
             <input type="text" placeholder="Search" className="search" />
             <h4>Recent</h4>
               <div className="recent-down">
-                <div className="friend">
                   {
                     userChats?.chat?.map((chat) => (
-                      <Conversation key={chat._id}  data={chat} currentUser={currentUser._id}/>
+                      <div key={chat._id} className="friend">
+                            <Conversation   data={chat} currentUser={currentUser._id}/>
+                      </div>
                     ))
                   }
-                </div>
               </div>
           </div>
         </div>
