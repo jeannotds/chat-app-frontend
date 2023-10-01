@@ -4,117 +4,7 @@ import Message from "../components/Message";
 import axios from "axios";
 
 const Chat = () => {
-  const [userChat, setUserChat] = useState({});
-  const [chats, setChats] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [UserReceiveMessage, setUserReceiveMessage] = useState({});
-  const [userSenderMessage, setUserSenderMessage] = useState({});
-  const [currentChat, setCurrentChat] = useState(null);
-  const [bothUserChat, setBothUsrChat] = useState({});
 
-  /*
-  const showUser = (listUsers) => {
-    setUserChat(listUsers);
-    // setCurrentChat(listUsers);
-    setCurrentChat(bothUserChat);
-  };
-  */
-
-  //USER COONECT TO PAGE
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  //ALL USERS
-  /*
-  useEffect(() => {
-    const getChats = async () => {
-      try {
-        const { data } = await axios.get(
-          `http://localhost:3005/auth/user/${user._id}`
-        );
-        setUsers(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getChats();
-  }, [user._id]);
-  */
-
-  //MY CONVERSATION
-  /*
-  useEffect(() => {
-    const getUSerConversation = async () => {
-      try {
-        const allChat = await axios.get(
-          `http://localhost:3005/chat/${user._id}`
-        );
-        setChats(allChat); //Conversation
-        console.log("chats", chats);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUSerConversation();
-  }, [user._id]);
-  */
-
-  
-
-  // BOTH CONVERSATION
-  /*
-  useEffect(() => {
-    const getBothConversation = async () => {
-      try {
-        const bothChat = await axios.get(
-          `http://localhost:3005/chat/find/${userChat._id}/${user._id}`
-        );
-        setBothUsrChat(bothChat);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getBothConversation();
-  }, [userChat._id, user._id]);
-  */
-
-
-  //MESSAGE RECEIVER
-  /*
-  useEffect(() => {
-    const getUserMessage = async () => {
-      try {
-        const message = await axios.get(
-          `http://localhost:3005/message/${userChat._id}`
-        );
-        setUserReceiveMessage(message);
-        console.log("RECEIVE : ", UserReceiveMessage);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUserMessage();
-  }, [userChat._id]);
-  */
-
-  //MESSAGE SENDER
-  /*
-  useEffect(() => {
-    const getUserSenderMessage = async () => {
-      try {
-        const message = await axios.get(
-          `http://localhost:3005/message/${user._id}`
-        );
-        setUserSenderMessage(message);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    // if(userSenderMessage != null)
-    getUserSenderMessage();
-  }, [user._id, userSenderMessage]);
-  */
-
-  //CONVERSATION DEUX USERS
 
   return (
     <div className="chat">
@@ -132,12 +22,8 @@ const Chat = () => {
             <input type="text" placeholder="Search" className="search" />
             <h4>Recent</h4>
             <div className="recent-down">
-              {/* {users?.user?.map((listUsers) => (
-                <div
-                  className="friend"
-                  key={listUsers._id}
-                  onClick={() => showUser(listUsers)}
-                >
+             
+                <div className="friend">
                   <div className="my-friend">
                     <img
                       src={profil}
@@ -146,7 +32,7 @@ const Chat = () => {
                       className="profil-recent"
                     />
                     <div className="name-friend">
-                      <span className="name">{listUsers.name}</span>
+                      <span className="name">Users name</span>
                       <div className="alert-msg">Last message</div>
                     </div>
                   </div>
@@ -154,14 +40,12 @@ const Chat = () => {
                     <div className="hr"></div>
                   </div>
                 </div>
-              ))} */}
             </div>
           </div>
         </div>
       </div>
       <div className="container-message">
-        {/* {currentChat ? (
-          <> */}
+
             <div className="message">
               <div className="my-image">
                 <img
@@ -171,7 +55,7 @@ const Chat = () => {
                   className="my_profil_msg"
                 />
                 <div className="Online">
-                  <div className="online-name">{userChat.name}</div>
+                  <div className="online-name">user name</div>
                   <div className="if-online">Online</div>
                 </div>
               </div>
@@ -180,11 +64,9 @@ const Chat = () => {
               <div className="list-message">
                 {/* <Message own={true} /> */}
               
-                {/* {UserReceiveMessage.data.map((msg) => (
-                  <div key={msg._id}>
-                    <Message msg={msg} />
+                  <div >
+                    <Message />
                   </div>
-                ))} */}
               </div>
               <form className="form">
                 <hr></hr>
@@ -192,10 +74,7 @@ const Chat = () => {
                 <button>send</button>
               </form>
             </div>
-          {/* </>
-        ) : (
-          <span className="no-chat">Open a Conversation to start a chat</span>
-        )} */}
+
       </div>
     </div>
   );
