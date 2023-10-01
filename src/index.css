@@ -310,4 +310,9 @@ margin: 20px 0 30px;
 
 /* MESSAGE-1 */
 
+.show-conversation{
+  font-size: 35px;
+  font-weight: bold;
+  color: #1966ff;
+}
 

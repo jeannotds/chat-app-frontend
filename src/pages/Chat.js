@@ -7,10 +7,11 @@ import OnlineUser from "../components/OnlineUser";
 
 const Chat = ({user}) => {
 
-  // const [currentUser, setCurrentUser] = useState(user);
-
   const [userChats, setUserChats] = useState([]);
   const [currentUser, setCurrentUser] = useState(user);
+  const [chat, setChat] = useState(null);
+  const [messages, setMessages] = useState(null);
+  
 
 
   useEffect(() => {
@@ -25,6 +26,16 @@ const Chat = ({user}) => {
 
   }, [currentUser._id]);
 
+  useEffect(() => {
+    axios.get(`http://localhost:8001/api/message/${chat?._id}`)
+    .then((res) => {
+      console.log('message received : ', res.data);
+      setMessages(res.data.messages);
+    })
+    .catch((err) => {
+      throw err;
+    }); 
+  }, [chat]);
   
 
 
@@ -46,8 +57,13 @@ const Chat = ({user}) => {
               <div className="recent-down">
                   {
                     userChats?.chat?.map((chat) => (
-                      <div key={chat._id} className="friend">
-                            <Conversation   data={chat} currentUser={currentUser._id}/>
+                      <div key={chat._id} className="friend" onClick={
+                        () => {
+                          setChat(chat);
+                          console.log(chat);
+                        }
+                      }>
+                          <Conversation   data={chat} currentUser={currentUser._id}/>
                       </div>
                     ))
                   }
@@ -55,20 +71,40 @@ const Chat = ({user}) => {
           </div>
         </div>
       </div>
+
       <div className="container-message">
-            <div className="message">
+          
+          {
+            chat ? (
+              <div className="message">
               <OnlineUser currentUser={currentUser} />
-              <div className="list-message">
-                  <div >
-                    <Message />
+              {
+                (messages.length > 0) ? (
+                  <div className="list-message">
+                    {
+                      messages?.map((msg) => (
+                        <div key={msg?._id}>
+                          <Message message = {msg} currentUser={currentUser} own={msg.senderId === currentUser._id } />
+                        </div>
+                      ))
+                    }
                   </div>
-              </div>
+                ) : <div style={{
+                  textAlign: 'center',
+                }}>No message exits</div>
+              }
               <form className="form">
                 <hr></hr>
                 <input type="text" placeholder="" />
                 <button>send</button>
               </form>
             </div>
+            ): 
+            <>
+              <div className="show-conversation" >No conversation.</div>
+              <div>Click to open your converstion.</div>
+            </>
+          }
 
       </div>
     </div>
