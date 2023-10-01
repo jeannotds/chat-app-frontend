@@ -6,9 +6,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ user, setUser }) => {
 
   let navigate = useNavigate();
+  // const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [existDate, setExistDate] = useState("");
@@ -24,8 +25,9 @@ const Login = () => {
         data: { password, email},
       })
       .then((res) => {
-        console.log(res);
         localStorage.setItem('data', JSON.stringify(res.data));
+        localStorage.setItem('token', JSON.stringify(res.token));
+        console.log('res : ', res.data);
         navigate("./chat");
       }).catch((err) => {
           const axiosError = err;

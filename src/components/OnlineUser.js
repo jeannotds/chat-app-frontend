@@ -19,5 +19,5 @@ export default function OnlineUser({currentUser}) {
         </div>
         <hr className="list-hr"></hr>
     </>
-  )
+  );
 }

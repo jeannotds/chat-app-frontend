@@ -7,20 +7,26 @@ import OnlineUser from "../components/OnlineUser";
 
 const Chat = ({user}) => {
 
+  // const [currentUser, setCurrentUser] = useState(user);
+
+  const [userChats, setUserChats] = useState([]);
   const [currentUser, setCurrentUser] = useState(user);
-  const [uerChats, setUserChats] = useState(user);
+
 
   useEffect(() => {
       
     axios.get(`http://localhost:8001/api/chat/${currentUser._id}`)
     .then((res) => {
       setUserChats(res.data);
+      console.log('userChats: ', res.data.chat);
     })
     .catch((err) => {
       throw err;
     });
 
   }, [currentUser._id]);
+
+  
 
 
   return (
@@ -38,7 +44,15 @@ const Chat = ({user}) => {
           <div className="recent">
             <input type="text" placeholder="Search" className="search" />
             <h4>Recent</h4>
-            <Conversation />
+              <div className="recent-down">
+                <div className="friend">
+                  {
+                    userChats?.chat?.map((chat) => (
+                      <Conversation key={chat._id}  data={chat} currentUser={currentUser._id}/>
+                    ))
+                  }
+                </div>
+              </div>
           </div>
         </div>
       </div>
