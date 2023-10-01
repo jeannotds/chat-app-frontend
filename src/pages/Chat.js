@@ -36,6 +36,11 @@ const Chat = ({user}) => {
       throw err;
     }); 
   }, [chat]);
+
+
+  useEffect(() => {
+    
+  });
   
 
 
