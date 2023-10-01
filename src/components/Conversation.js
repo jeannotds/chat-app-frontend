@@ -1,3 +1,43 @@
+import React from 'react';
+import Profil from '../images/Jeannot.jpeg';
+
+export default function Conversation({currentUser}) {
+
+    console.log('currentUser', currentUser);
+
+  return (
+    <>
+        <div className="recent-down">
+            <div className="friend">
+                <div className="my-friend">
+                <img
+                    src={Profil}
+                    alt="profil"
+                    title="profil"
+                    className="profil-recent"
+                />
+                <div className="name-friend">
+                    <span className="name">Users name</span>
+                    <div className="alert-msg">Last message</div>
+                </div>
+                </div>
+                <div className="container-hr">
+                <div className="hr"></div>
+                </div>
+            </div>
+        </div>
+    </>
+  )
+}
+
+
+
+
+
+
+
+
+
 // // import axios from 'axios'
 // // import React, { useEffect, useState } from 'react'
 // // import profil from '../images/Jeannot.jpeg'

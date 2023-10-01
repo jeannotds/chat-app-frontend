@@ -2,8 +2,25 @@ import React, { useEffect, useState } from "react";
 import profil from "../images/Jeannot.jpeg";
 import Message from "../components/Message";
 import axios from "axios";
+import Conversation from "../components/Conversation";
+import OnlineUser from "../components/OnlineUser";
 
-const Chat = () => {
+const Chat = ({user}) => {
+
+  const [currentUser, setCurrentUser] = useState(user);
+  const [uerChats, setUserChats] = useState(user);
+
+  useEffect(() => {
+      
+    axios.get(`http://localhost:8001/api/chat/${currentUser._id}`)
+    .then((res) => {
+      setUserChats(res.data);
+    })
+    .catch((err) => {
+      throw err;
+    });
+
+  }, [currentUser._id]);
 
 
   return (
@@ -21,49 +38,14 @@ const Chat = () => {
           <div className="recent">
             <input type="text" placeholder="Search" className="search" />
             <h4>Recent</h4>
-            <div className="recent-down">
-             
-                <div className="friend">
-                  <div className="my-friend">
-                    <img
-                      src={profil}
-                      alt="profil"
-                      title="profil"
-                      className="profil-recent"
-                    />
-                    <div className="name-friend">
-                      <span className="name">Users name</span>
-                      <div className="alert-msg">Last message</div>
-                    </div>
-                  </div>
-                  <div className="container-hr">
-                    <div className="hr"></div>
-                  </div>
-                </div>
-            </div>
+            <Conversation />
           </div>
         </div>
       </div>
       <div className="container-message">
-
             <div className="message">
-              <div className="my-image">
-                <img
-                  src={profil}
-                  alt="profil"
-                  title="profil"
-                  className="my_profil_msg"
-                />
-                <div className="Online">
-                  <div className="online-name">user name</div>
-                  <div className="if-online">Online</div>
-                </div>
-              </div>
-              <hr className="list-hr"></hr>
-
+              <OnlineUser currentUser={currentUser} />
               <div className="list-message">
-                {/* <Message own={true} /> */}
-              
                   <div >
                     <Message />
                   </div>
