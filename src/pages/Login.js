@@ -6,10 +6,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const Login = ({ user, setUser }) => {
+const Login = () => {
 
   let navigate = useNavigate();
-  // const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [existDate, setExistDate] = useState("");
