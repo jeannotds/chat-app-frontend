@@ -5,7 +5,6 @@ import axios from "axios";
 
 const Chat = () => {
   const [userChat, setUserChat] = useState({});
-  // eslint-disable-next-line no-unused-vars
   const [chats, setChats] = useState([]);
   const [users, setUsers] = useState([]);
   const [UserReceiveMessage, setUserReceiveMessage] = useState({});
@@ -13,16 +12,19 @@ const Chat = () => {
   const [currentChat, setCurrentChat] = useState(null);
   const [bothUserChat, setBothUsrChat] = useState({});
 
+  /*
   const showUser = (listUsers) => {
     setUserChat(listUsers);
     // setCurrentChat(listUsers);
     setCurrentChat(bothUserChat);
   };
+  */
 
   //USER COONECT TO PAGE
   const user = JSON.parse(localStorage.getItem("user"));
 
   //ALL USERS
+  /*
   useEffect(() => {
     const getChats = async () => {
       try {
@@ -36,8 +38,10 @@ const Chat = () => {
     };
     getChats();
   }, [user._id]);
+  */
 
   //MY CONVERSATION
+  /*
   useEffect(() => {
     const getUSerConversation = async () => {
       try {
@@ -52,10 +56,12 @@ const Chat = () => {
     };
     getUSerConversation();
   }, [user._id]);
+  */
 
   
 
   // BOTH CONVERSATION
+  /*
   useEffect(() => {
     const getBothConversation = async () => {
       try {
@@ -69,9 +75,11 @@ const Chat = () => {
     };
     getBothConversation();
   }, [userChat._id, user._id]);
+  */
 
 
   //MESSAGE RECEIVER
+  /*
   useEffect(() => {
     const getUserMessage = async () => {
       try {
@@ -86,8 +94,10 @@ const Chat = () => {
     };
     getUserMessage();
   }, [userChat._id]);
+  */
 
   //MESSAGE SENDER
+  /*
   useEffect(() => {
     const getUserSenderMessage = async () => {
       try {
@@ -102,6 +112,7 @@ const Chat = () => {
     // if(userSenderMessage != null)
     getUserSenderMessage();
   }, [user._id, userSenderMessage]);
+  */
 
   //CONVERSATION DEUX USERS
 
@@ -121,7 +132,7 @@ const Chat = () => {
             <input type="text" placeholder="Search" className="search" />
             <h4>Recent</h4>
             <div className="recent-down">
-              {users?.user?.map((listUsers) => (
+              {/* {users?.user?.map((listUsers) => (
                 <div
                   className="friend"
                   key={listUsers._id}
@@ -143,14 +154,14 @@ const Chat = () => {
                     <div className="hr"></div>
                   </div>
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
         </div>
       </div>
       <div className="container-message">
-        {currentChat ? (
-          <>
+        {/* {currentChat ? (
+          <> */}
             <div className="message">
               <div className="my-image">
                 <img
@@ -168,12 +179,12 @@ const Chat = () => {
 
               <div className="list-message">
                 {/* <Message own={true} /> */}
-
-                {UserReceiveMessage.data.map((msg) => (
+              
+                {/* {UserReceiveMessage.data.map((msg) => (
                   <div key={msg._id}>
                     <Message msg={msg} />
                   </div>
-                ))}
+                ))} */}
               </div>
               <form className="form">
                 <hr></hr>
@@ -181,58 +192,13 @@ const Chat = () => {
                 <button>send</button>
               </form>
             </div>
-          </>
+          {/* </>
         ) : (
           <span className="no-chat">Open a Conversation to start a chat</span>
-        )}
+        )} */}
       </div>
     </div>
   );
 };
 
 export default Chat;
-
-// const [ user, setuser ] = useState([])
-
-// useEffect(() => {
-//     const getUsers = async()=>{
-//         try {
-//             const response=await axios.get("http://localhost:3005/api/auth/")
-//             setuser(response.data)
-//         } catch (error) {
-//         console.log(error)
-//         }
-//     }
-//     getUsers()
-// }, [])
-
-// console.log("USER : ", user)
-
-//     const [ chat, setChat ] = useState([])
-
-//     useEffect(() => {
-//         const getUsers = async()=>{
-//             try {
-//                 const response=await axios.get(`http://localhost:3005/api/chat/${user._id}`)
-//                 // console.log(response.data)
-//                 setChat(response.data)
-//             } catch (error) {
-//             console.log(error)
-//             }
-//         }
-//         getUsers()
-// }, [])
-
-// const getChats = async() => {
-
-//     try{
-//         // const { data } = await userChats(user._id)
-//         const { data } = await userChats()
-//         setChats(data)
-//     }
-//     catch(error) {
-//         console.log(error)
-//     }
-
-// }
-// getChats()
