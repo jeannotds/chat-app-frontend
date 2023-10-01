@@ -2,60 +2,45 @@ import { Button, Row, Form, Col, Container } from "react-bootstrap";
 import React from "react";
 import "../styles/login.css";
 import { useState } from "react";
-import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Login = ({ user, setUser }) => {
-  // const { setUser } = useContext(userContext);
 
   let navigate = useNavigate();
+  // const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [existDate, setExistDate] = useState("");
+  
+  const  handleLogin = async(e) => {
+    e.preventDefault();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    // eslint-disable-next-line no-unused-vars
-    const user = localStorage.getItem("user");
-    axios
-      .get("http://localhost:3005/auth/protected", {
-        headers: {
-          Authorization: token,
-        },
+    if(email && password) {
+      await axios({
+        method: "POST",
+        headers: {'X-Custom-Header': 'foobar'},
+        url: 'http://localhost:8001/api/auth/login',
+        data: { password, email},
       })
       .then((res) => {
         console.log(res);
-        navigate("/chat");
-      })
-      .catch((err) => {
-        console.log(err);
-        navigate("/");
-      });
-  }, [user, navigate]);
+        localStorage.setItem('data', JSON.stringify(res.data));
+        navigate("./chat");
+      }).catch((err) => {
+          const axiosError = err;
+          const response = axiosError.response;
+          const responseData = response.data;
+          const message = responseData.message;
+          setExistDate(message);
+        });
+      }
 
-  const submit = (e) => {
-    e.preventDefault();
-    console.log(email, password);
-    axios
-      .post("http://localhost:3005/auth/login", { email, password })
-      .then((user) => {
-        // console.log(user)
-        // eslint-disable-next-line react/prop-types
-        localStorage.setItem("token", user.data.token);
-        // eslint-disable-next-line no-unused-vars
-        const data = user.data.user;
-        console.log("uusseur", user.data.user);
-        navigate("/chat");
-        setUser(user);
-        localStorage.setItem("user", JSON.stringify(user.data.user));
-        // localStorage.setItem('testObject', JSON.stringify(testObject));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    };
 
+    console.log(existDate);
+    
   return (
     <Container>
       <Row>
@@ -63,7 +48,7 @@ const Login = ({ user, setUser }) => {
           md={7}
           className="d-flex align-items-center justify-content-center flex-direction-column"
         >
-          <Form onSubmit={submit}>
+          <Form onSubmit={handleLogin}>
             <h1 className="tetxt-center">Create account</h1>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Email</Form.Label>
@@ -102,9 +87,3 @@ const Login = ({ user, setUser }) => {
 };
 
 export default Login;
-
-//     <form>
-//       <input type="email" placeholder="Email" onChange={(e)=>setEmail(e.target.value)} value={email} />
-//       <input type="password" placeholder="Password" onChange={(e)=>setPassword(e.target.value)} value={password} />
-//       <button onClick={submit}>login</button>
-//   </form>

@@ -9,7 +9,7 @@ const Message = ({ own, msg }) => {
     <div className={own ? "message-1 own" : "message-1"}>
       <div className="messageTop">
         {/* <img src=''  alt='profil' title=''/> */}
-        <p className="messageText">{msg.text}</p>
+        <p className="messageText">{msg?.text}</p>
       </div>
       <div className="messageBottom"></div>
     </div>
