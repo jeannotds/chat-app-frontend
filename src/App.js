@@ -7,16 +7,16 @@ import { useEffect, useState } from 'react';
 
 function App() {
   
-  const currentUser = JSON.parse(localStorage.getItem('data')).user;
+  // const currentUser = JSON.parse(localStorage.getItem('data')).user;
 
-  // const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  // useEffect(() => {
-  //   if((localStorage.getItem('data')) !== null){
-  //     const user = JSON.parse(localStorage.getItem('data')).user;
-  //     setCurrentUser(user);
-  //   }
-  // },[]);
+  useEffect(() => {
+    if((localStorage.getItem('data')) !== null){
+      const user = JSON.parse(localStorage.getItem('data')).user;
+      setCurrentUser(user);
+    }
+  },[]);
   
   return (
    

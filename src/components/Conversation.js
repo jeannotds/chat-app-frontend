@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Profil from "../images/Jeannot.jpeg";
-import axios from "axios";
 import { getUser } from "../helper/request/user";
 
 export default function Conversation({ data, currentUser }) {
