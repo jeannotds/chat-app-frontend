@@ -260,13 +260,6 @@ code {
   margin: 10px 0 30px;
 }
 
-.form{
-position: absolute;
-bottom: 0;
-width: 100%;
-margin: 20px 0 30px;
-}
-
 .form input{
   width: 84%;
   margin-right:10px;

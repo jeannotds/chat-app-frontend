@@ -14,7 +14,7 @@ export default function Conversation({ data, currentUser }) {
         }).catch((err) => {
             throw err;
         });
-    },[currentUser]);
+    },[currentUser, data]);
 
   return (
     <>

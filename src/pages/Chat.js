@@ -4,6 +4,7 @@ import Message from "../components/Message";
 import axios from "axios";
 import Conversation from "../components/Conversation";
 import OnlineUser from "../components/OnlineUser";
+import FormInput from "../components/FormInput";
 
 const Chat = ({user}) => {
 
@@ -11,9 +12,7 @@ const Chat = ({user}) => {
   const [currentUser, setCurrentUser] = useState(user);
   const [chat, setChat] = useState(null);
   const [messages, setMessages] = useState(null);
-  const [text, setText] = useState("");
 
-  console.log('msg : ', text);
   
   useEffect(() => {
       
@@ -37,27 +36,6 @@ const Chat = ({user}) => {
       throw err;
     }); 
   }, [chat,]);
-
-  
-  
-  async function sendMessage(e) {
-    e.preventDefault();
-
-      await axios({
-        method: "POST",
-        headers: {'X-Custom-Header': 'foobar'},
-        url: 'http://localhost:8001/api/message',
-        data: { chatId : chat._id , senderId : currentUser._id, text: text },
-      })
-      .then((res) => {
-        const message = res.data;
-        console.log("message: ", message);
-      })
-      .catch((err) => {
-        throw err;
-      });
-      
-  };
   
 
 
@@ -115,12 +93,10 @@ const Chat = ({user}) => {
                   textAlign: 'center',
                 }}>No message exits</div>
               }
-              <form className="form" onSubmit={sendMessage}>
-                <hr></hr>
-                <input type="text" placeholder="Ecrire un message..." onChange={(msg) => {
-                  setText(msg.target.value);
-                }} />
-              </form>
+             <>
+             
+             </>
+               <FormInput chatId= {chat._id} senderId= {currentUser._id} />
             </div>
             ): 
             <>
