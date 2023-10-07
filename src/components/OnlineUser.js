@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Profil from '../images/Jeannot.jpeg';
 import axios from 'axios';
+import { getUser } from '../helper/request/user';
 
 
 export default function OnlineUser({currentUser, chat}) {
@@ -8,18 +9,18 @@ export default function OnlineUser({currentUser, chat}) {
   const [receiver, setReceiver] = useState(null); 
   const receiverUser = chat.members.find(id => id !== currentUser._id);
 
-
   useEffect(() => {
-    axios.get(`http://localhost:8001/api/user/${receiverUser}`)
-    .then((res) => {
-      setReceiver(res.data);
-    })
-    .catch((err) => {
-      throw err;
-    });
-
+    const fetchData = async() => {
+      try {
+        const user = await getUser(receiverUser);
+        setReceiver(user);
+      }
+      catch (err) {
+        throw err;
+      }
+    };
+    fetchData();
   },[currentUser, receiverUser]);
-
 
 
   return (

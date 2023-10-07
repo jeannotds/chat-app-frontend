@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Profil from "../images/Jeannot.jpeg";
 import axios from "axios";
+import { getUser } from "../helper/request/user";
 
 export default function Conversation({ data, currentUser }) {
 
@@ -8,12 +9,16 @@ export default function Conversation({ data, currentUser }) {
 
     useEffect(() => {
         const userId = data.members.find(id => id !== currentUser);
-        axios.get(`http://localhost:8001/api/user/${userId}`)
-        .then((res) => {
-            setUserData(res.data);
-        }).catch((err) => {
-            throw err;
-        });
+        const fetchData = async() => {
+            try{
+              const user = await getUser(userId);
+              setUserData(user);
+            }  
+            catch(err){
+              throw err;
+            }        
+        };
+        fetchData();
     },[currentUser, data]);
 
   return (
