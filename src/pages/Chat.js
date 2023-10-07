@@ -34,7 +34,7 @@ const Chat = ({user}) => {
     .catch((err) => {
       throw err;
     }); 
-  }, [chat,]);
+  }, [chat, messages]);
   
 
 
