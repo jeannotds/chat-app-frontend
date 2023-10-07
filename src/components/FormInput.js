@@ -10,8 +10,6 @@ function FormInput({chatId, senderId}) {
     const [text, setText] = useState("");
 
     async function sendMessage() {
-
-        console.log('text');
     
           await axios({
             method: "POST",

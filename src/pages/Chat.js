@@ -29,7 +29,6 @@ const Chat = ({user}) => {
   useEffect(() => {
     axios.get(`http://localhost:8001/api/message/${chat?._id}`)
     .then((res) => {
-      console.log('message received : ', res.data);
       setMessages(res.data.messages);
     })
     .catch((err) => {
@@ -60,7 +59,6 @@ const Chat = ({user}) => {
                       <div key={chat._id} className="friend" onClick={
                         () => {
                           setChat(chat);
-                          console.log(chat);
                         }
                       }>
                           <Conversation   data={chat} currentUser={currentUser._id}/>
@@ -71,9 +69,7 @@ const Chat = ({user}) => {
           </div>
         </div>
       </div>
-
       <div className="container-message">
-          
           {
             chat ? (
               <div className="message">
@@ -91,18 +87,17 @@ const Chat = ({user}) => {
                   </div>
                 ) : <div style={{
                   textAlign: 'center',
-                }}>No message exits</div>
+                }}>No message exist</div>
               }
-             <>
-             
-             </>
-               <FormInput chatId= {chat._id} senderId= {currentUser._id} />
+               <div>
+                  <FormInput chatId= {chat._id} senderId= {currentUser._id} />
+               </div>
             </div>
             ): 
-            <>
+            <div>
               <div className="show-conversation" >No conversation.</div>
               <div>Click to open your converstion.</div>
-            </>
+            </div>
           }
 
       </div>
