@@ -11,9 +11,10 @@ const Chat = ({user}) => {
   const [currentUser, setCurrentUser] = useState(user);
   const [chat, setChat] = useState(null);
   const [messages, setMessages] = useState(null);
+  const [text, setText] = useState("");
+
+  console.log('msg : ', text);
   
-
-
   useEffect(() => {
       
     axios.get(`http://localhost:8001/api/chat/${currentUser._id}`)
@@ -35,12 +36,28 @@ const Chat = ({user}) => {
     .catch((err) => {
       throw err;
     }); 
-  }, [chat]);
+  }, [chat,]);
 
+  
+  
+  async function sendMessage(e) {
+    e.preventDefault();
 
-  useEffect(() => {
-    
-  });
+      await axios({
+        method: "POST",
+        headers: {'X-Custom-Header': 'foobar'},
+        url: 'http://localhost:8001/api/message',
+        data: { chatId : chat._id , senderId : currentUser._id, text: text },
+      })
+      .then((res) => {
+        const message = res.data;
+        console.log("message: ", message);
+      })
+      .catch((err) => {
+        throw err;
+      });
+      
+  };
   
 
 
@@ -98,10 +115,11 @@ const Chat = ({user}) => {
                   textAlign: 'center',
                 }}>No message exits</div>
               }
-              <form className="form">
+              <form className="form" onSubmit={sendMessage}>
                 <hr></hr>
-                <input type="text" placeholder="" />
-                <button>send</button>
+                <input type="text" placeholder="Ecrire un message..." onChange={(msg) => {
+                  setText(msg.target.value);
+                }} />
               </form>
             </div>
             ): 
