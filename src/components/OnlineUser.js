@@ -1,8 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import Profil from '../images/Jeannot.jpeg';
+import axios from 'axios';
 
 
-export default function OnlineUser({currentUser}) {
+export default function OnlineUser({currentUser, chat}) {
+
+  const [receiver, setReceiver] = useState(null); 
+  const receiverUser = chat.members.find(id => id !== currentUser._id);
+
+
+  useEffect(() => {
+    axios.get(`http://localhost:8001/api/user/${receiverUser}`)
+    .then((res) => {
+      setReceiver(res.data);
+    })
+    .catch((err) => {
+      throw err;
+    });
+
+  },[currentUser, receiverUser]);
+
+
+
   return (
     <>
         <div className="my-image">
@@ -13,7 +32,7 @@ export default function OnlineUser({currentUser}) {
                 className="my_profil_msg"
             />
             <div className="Online">
-                <div className="online-name">{currentUser?.username}</div>
+                <div className="online-name">{receiver?.username}</div>
                 <div className="if-online">Online</div>
             </div>
         </div>

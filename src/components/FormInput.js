@@ -31,7 +31,7 @@ function FormInput({chatId, senderId}) {
   return (
 
     <div >
-         <form className="inputEmoji" onSubmit={sendMessage}>
+         <div className="inputEmoji" >
             <InputEmoji 
                 value={text}
                 onChange={setText}
@@ -39,11 +39,11 @@ function FormInput({chatId, senderId}) {
                 onEnter={sendMessage}
                 placeholder="Ecrire un message..."
             />
-        </form>
+            <div className="button-msg" onSubmit={sendMessage} type="submit" >Send</div> 
+        </div>
     </div>
 
         
-    //     {/* <button type="submit" >Send</button> */}
   );
 }
 

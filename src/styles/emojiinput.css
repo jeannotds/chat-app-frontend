@@ -3,4 +3,17 @@
     bottom: 0;
     width: 90%;
     margin: 20px 0 30px;
+    display: flex;
+    align-items: center;
+}
+
+.button-msg{
+    outline: none;
+    border: 0;
+    padding: 4px 5px;
+    display: block;
+    background-color: blue;
+    border-radius: 5px;
+    color: white;
+
 }

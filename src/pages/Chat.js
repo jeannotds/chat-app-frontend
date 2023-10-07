@@ -73,7 +73,7 @@ const Chat = ({user}) => {
           {
             chat ? (
               <div className="message">
-              <OnlineUser currentUser={currentUser} />
+              <OnlineUser currentUser={currentUser} chat={chat} />
               {
                 (messages.length > 0) ? (
                   <div className="list-message">
