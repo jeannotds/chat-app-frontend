@@ -5,6 +5,7 @@ import axios from "axios";
 import Conversation from "../components/Conversation";
 import OnlineUser from "../components/OnlineUser";
 import FormInput from "../components/FormInput";
+import { io } from 'socket.io-client';
 
 const Chat = ({user}) => {
 
@@ -12,7 +13,23 @@ const Chat = ({user}) => {
   const [currentUser, setCurrentUser] = useState(user);
   const [chat, setChat] = useState(null);
   const [messages, setMessages] = useState(null);
+  const [socket, setSocket] = useState(null);
+  
 
+
+  // Initial Socket
+  useEffect(() => {
+    setSocket(io("http://localhost:8800"));
+  },[]);
+
+  console.log(socket);
+
+
+  // useEffect(() => {
+  //   socket?.on("welcome", message => {
+  //     console.log(message);
+  //   });
+  // },[socket]);
   
   useEffect(() => {
       
@@ -34,7 +51,7 @@ const Chat = ({user}) => {
     .catch((err) => {
       throw err;
     }); 
-  }, [chat, messages]);
+  }, [chat,]);
   
 
 
