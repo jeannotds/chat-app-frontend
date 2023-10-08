@@ -18,12 +18,15 @@ const Chat = ({user}) => {
   const [chat, setChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [arriveMessage, setArriveMessage] = useState(null);
+  const [mewMessage, setNewMessage] = useState(null);
 
 
   const [text, setText] = useState("");
-  // const [receiver, setReceiver] = useState(null); 
 
   const socket = useRef();
+
+  console.log("mewMessage: ", mewMessage);
+
   
   useEffect(() => {
     socket.current = io("http://localhost:8800");
@@ -59,11 +62,12 @@ const Chat = ({user}) => {
     axios.get(`http://localhost:8001/api/message/${chat?._id}`)
     .then((res) => {
       setMessages(res.data.messages);
+      console.log('messages:', res.data.messages);
     })
     .catch((err) => {
       throw err;
     }); 
-  }, [chat,]);
+  }, [chat, mewMessage]);
 
   
 
@@ -71,29 +75,28 @@ const Chat = ({user}) => {
   const receiverUser = chat?.members.find(id => id !== currentUser._id);
 
   async function sendMessage() {
-
-    const message = { chatId : chat._id , senderId : currentUser._id, text: text };
-
+    
     //Send message
     socket.current.emit("sendMessage", {
       senderId : currentUser._id,
       receiverId: receiverUser,
       text: text,
     });
-
-    await axios({
-      method: "POST",
-      headers: {'X-Custom-Header': 'foobar'},
-      url: 'http://localhost:8001/api/message',
-      data: message,
-    })
-    .then((res) => {
-      const message = res.data;
-      console.log("message: ", message);
-    })
-    .catch((err) => {
+    
+    const message = { chatId : chat._id , senderId : currentUser._id, text: text };
+    try {
+      const res = await axios({
+        method: "POST",
+        headers: {'X-Custom-Header': 'foobar'},
+        url: 'http://localhost:8001/api/message',
+        data: message,
+      });
+      console.log('res', res.data);
+      setMessages([...messages, res.data.result]);
+    }
+    catch(err) {
       throw err;
-    });
+    }
       
   };
   
