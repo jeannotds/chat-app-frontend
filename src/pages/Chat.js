@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import profil from "../images/Jeannot.jpeg";
 import Message from "../components/Message";
 import axios from "axios";
@@ -13,16 +13,20 @@ const Chat = ({user}) => {
   const [currentUser, setCurrentUser] = useState(user);
   const [chat, setChat] = useState(null);
   const [messages, setMessages] = useState(null);
-  const [socket, setSocket] = useState(null);
+  // const [socket, setSocket] = useState(null);
+  const socket = useRef(io("http://localhost:8800"));
   
 
 
   // Initial Socket
   useEffect(() => {
-    setSocket(io("http://localhost:8800"));
-  },[]);
+    console.log('socket => ', socket);
+    socket.current.emit('addUser', currentUser._id);
+    socket.current.on("getUser", users=> {
+      console.log('users socket : ', users);
+    });
+  },[currentUser]);
 
-  console.log(socket);
 
 
   // useEffect(() => {
