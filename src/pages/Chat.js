@@ -21,19 +21,16 @@ const Chat = ({user}) => {
   // Initial Socket
   useEffect(() => {
     console.log('socket => ', socket);
+
+    //Emettre user socket
     socket.current.emit('addUser', currentUser._id);
+
+    //Get user socket
     socket.current.on("getUser", users=> {
       console.log('users socket : ', users);
     });
   },[currentUser]);
 
-
-
-  // useEffect(() => {
-  //   socket?.on("welcome", message => {
-  //     console.log(message);
-  //   });
-  // },[socket]);
   
   useEffect(() => {
       
