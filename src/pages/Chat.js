@@ -5,6 +5,10 @@ import axios from "axios";
 import Conversation from "../components/Conversation";
 import OnlineUser from "../components/OnlineUser";
 import FormInput from "../components/FormInput";
+
+import InputEmoji from "react-input-emoji";
+import "../styles/emojiinput.css";
+
 import { io } from 'socket.io-client';
 
 const Chat = ({user}) => {
@@ -12,11 +16,18 @@ const Chat = ({user}) => {
   const [userChats, setUserChats] = useState([]);
   const [currentUser, setCurrentUser] = useState(user);
   const [chat, setChat] = useState(null);
-  const [messages, setMessages] = useState(null);
-  // const [socket, setSocket] = useState(null);
-  const socket = useRef(io("http://localhost:8800"));
-  
+  const [messages, setMessages] = useState([]);
+  const [arriveMessage, setArriveMessage] = useState(null);
 
+
+  const [text, setText] = useState("");
+  // const [receiver, setReceiver] = useState(null); 
+
+  const socket = useRef();
+  
+  useEffect(() => {
+    socket.current = io("http://localhost:8800");
+  }, []);
 
   // Initial Socket
   useEffect(() => {
@@ -53,6 +64,38 @@ const Chat = ({user}) => {
       throw err;
     }); 
   }, [chat,]);
+
+  
+
+
+  const receiverUser = chat?.members.find(id => id !== currentUser._id);
+
+  async function sendMessage() {
+
+    const message = { chatId : chat._id , senderId : currentUser._id, text: text };
+
+    //Send message
+    socket.current.emit("sendMessage", {
+      senderId : currentUser._id,
+      receiverId: receiverUser,
+      text: text,
+    });
+
+    await axios({
+      method: "POST",
+      headers: {'X-Custom-Header': 'foobar'},
+      url: 'http://localhost:8001/api/message',
+      data: message,
+    })
+    .then((res) => {
+      const message = res.data;
+      console.log("message: ", message);
+    })
+    .catch((err) => {
+      throw err;
+    });
+      
+  };
   
 
 
@@ -108,7 +151,16 @@ const Chat = ({user}) => {
                 }}>No message exist</div>
               }
                <div>
-                  <FormInput chatId= {chat._id} senderId= {currentUser._id} />
+                    <div className="inputEmoji" >
+                        <InputEmoji 
+                            value={text}
+                            onChange={setText}
+                            cleanOnEnter
+                            onEnter={sendMessage}
+                            placeholder="Ecrire un message..."
+                        />
+                        <div className="button-msg" onSubmit={sendMessage} type="submit" >Send</div> 
+                    </div>
                </div>
             </div>
             ): 
