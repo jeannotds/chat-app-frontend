@@ -25,25 +25,34 @@ const Chat = ({user}) => {
 
   const socket = useRef();
 
-  console.log("mewMessage: ", mewMessage);
 
-  
-  useEffect(() => {
+  useEffect(() => { 
     socket.current = io("http://localhost:8800");
+
+    socket.current.on("getMessage", data => {
+      // console.log("data" , data);
+      setArriveMessage({
+        senderId: data.senderId,
+        text: data.text,
+        createdAt: Date.now()
+      });
+    });
+
   }, []);
 
-  // Initial Socket
+  console.log('arrive message ! ', arriveMessage);
+  
   useEffect(() => {
-    console.log('socket => ', socket);
-
-    //Emettre user socket
     socket.current.emit('addUser', currentUser._id);
+    socket.current.on("getUsers", users=> users);
+  }, [currentUser]);
 
-    //Get user socket
-    socket.current.on("getUser", users=> {
-      console.log('users socket : ', users);
-    });
-  },[currentUser]);
+
+  // useEffect(() => {
+  //   arriveMessage && chat.members.includes(arriveMessage.senderId) && 
+  //   setMessages((prev => [...prev, arriveMessage]));
+  //   // console.log('chat : ', chat);
+  // }, [arriveMessage, chat,]);
 
   
   useEffect(() => {
@@ -62,7 +71,7 @@ const Chat = ({user}) => {
     axios.get(`http://localhost:8001/api/message/${chat?._id}`)
     .then((res) => {
       setMessages(res.data.messages);
-      console.log('messages:', res.data.messages);
+      // console.log('messages:', res.data.messages);
     })
     .catch((err) => {
       throw err;
@@ -72,10 +81,12 @@ const Chat = ({user}) => {
   
 
 
+  
   const receiverUser = chat?.members.find(id => id !== currentUser._id);
-
   async function sendMessage() {
     
+    const message = { chatId : chat._id , senderId : currentUser._id, text: text };
+
     //Send message
     socket.current.emit("sendMessage", {
       senderId : currentUser._id,
@@ -83,7 +94,6 @@ const Chat = ({user}) => {
       text: text,
     });
     
-    const message = { chatId : chat._id , senderId : currentUser._id, text: text };
     try {
       const res = await axios({
         method: "POST",
