@@ -30,29 +30,24 @@ const Chat = ({user}) => {
     socket.current = io("http://localhost:8800");
 
     socket.current.on("getMessage", data => {
-      // console.log("data" , data);
       setArriveMessage({
         senderId: data.senderId,
         text: data.text,
         createdAt: Date.now()
       });
     });
-
   }, []);
 
-  console.log('arrive message ! ', arriveMessage);
   
   useEffect(() => {
     socket.current.emit('addUser', currentUser._id);
     socket.current.on("getUsers", users=> users);
   }, [currentUser]);
 
-
-  // useEffect(() => {
-  //   arriveMessage && chat.members.includes(arriveMessage.senderId) && 
-  //   setMessages((prev => [...prev, arriveMessage]));
-  //   // console.log('chat : ', chat);
-  // }, [arriveMessage, chat,]);
+  useEffect(() => {
+    arriveMessage && chat.members.includes(arriveMessage.senderId) && 
+    setMessages((prev => [...prev, arriveMessage]));
+  }, [arriveMessage, chat,]);
 
   
   useEffect(() => {
@@ -71,7 +66,6 @@ const Chat = ({user}) => {
     axios.get(`http://localhost:8001/api/message/${chat?._id}`)
     .then((res) => {
       setMessages(res.data.messages);
-      // console.log('messages:', res.data.messages);
     })
     .catch((err) => {
       throw err;
@@ -101,7 +95,6 @@ const Chat = ({user}) => {
         url: 'http://localhost:8001/api/message',
         data: message,
       });
-      console.log('res', res.data);
       setMessages([...messages, res.data.result]);
     }
     catch(err) {
