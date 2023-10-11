@@ -19,6 +19,10 @@ const Chat = ({user}) => {
   const [messages, setMessages] = useState([]);
   const [arriveMessage, setArriveMessage] = useState(null);
   const [mewMessage, setNewMessage] = useState(null);
+  const scrolRef = useRef(null);
+  const [loadMessage, setLoadMessage] = useState(false);
+
+
 
 
   const [text, setText] = useState("");
@@ -49,6 +53,12 @@ const Chat = ({user}) => {
     setMessages((prev => [...prev, arriveMessage]));
   }, [arriveMessage, chat,]);
 
+
+  // scroll auto message
+  useEffect(() => {
+    scrolRef.current?.scrollIntoView( {behavior: "smooth"} );
+  }, [messages]);
+
   
   useEffect(() => {
       
@@ -66,6 +76,7 @@ const Chat = ({user}) => {
     axios.get(`http://localhost:8001/api/message/${chat?._id}`)
     .then((res) => {
       setMessages(res.data.messages);
+      setLoadMessage(true);
     })
     .catch((err) => {
       throw err;
@@ -147,7 +158,9 @@ const Chat = ({user}) => {
                     {
                       messages?.map((msg) => (
                         <div key={msg?._id}>
-                          <Message message = {msg} currentUser={currentUser} own={msg.senderId === currentUser._id } />
+                          <div ref={scrolRef}>
+                              <Message message = {msg} loadMessage={loadMessage} currentUser={currentUser} own={msg.senderId === currentUser._id } />
+                          </div>
                         </div>
                       ))
                     }

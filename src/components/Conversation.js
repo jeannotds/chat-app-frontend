@@ -5,6 +5,7 @@ import { getUser } from "../helper/request/user";
 export default function Conversation({ data, currentUser }) {
 
     const [userData, setUserData] = useState(null);
+    const [loadUser, setLoadUser] = useState(false);
 
     useEffect(() => {
         const userId = data.members.find(id => id !== currentUser);
@@ -12,6 +13,9 @@ export default function Conversation({ data, currentUser }) {
             try{
               const user = await getUser(userId);
               setUserData(user);
+              setTimeout(() => {
+                setLoadUser(true);
+              },1000);
             }  
             catch(err){
               throw err;
@@ -23,15 +27,20 @@ export default function Conversation({ data, currentUser }) {
   return (
     <>
       <div className="my-friend">
-        <img
+        {loadUser ? <img
           src={Profil}
           alt="profil"
           title="profil"
           className="profil-recent"
-        />
+        /> : <div className="LoadImage"></div>}
         <div className="name-friend">
-          <span className="name">{userData?.username}</span>
-          <div className="alert-msg">Hello</div>
+          {  
+            loadUser ? 
+              <>
+                <span className="name">{userData?.username}</span> 
+                <div className="alert-msg">Hello</div>
+              </> : <div className="loadUser"></div> 
+          }
         </div>
       </div>
       <div className="container-hr">

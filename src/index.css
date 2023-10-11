@@ -297,10 +297,6 @@ code {
   background-color: #eaeaea;
 }
 
-/* .no-chat{
-  position: absolute;
-} */
-
 /* MESSAGE-1 */
 
 .show-conversation{
@@ -309,3 +305,18 @@ code {
   color: #1966ff;
 }
 
+/* Conversation */
+
+.loadUser , .loardMessage{
+  background-color: rgba(190, 194, 201, 0.36);
+  height: 20px;
+  width: 80px;
+  border-radius: 5px;
+}
+
+.LoadImage{
+  background-color: rgba(190, 194, 201, 0.36);
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
+}

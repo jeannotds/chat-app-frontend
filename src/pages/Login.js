@@ -9,15 +9,18 @@ import { Link } from "react-router-dom";
 const Login = ({ user, setUser }) => {
 
   let navigate = useNavigate();
-  // const [user, setUser] = useState("");
+  const [loaderSubmit, setLoaderSubmit] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [existDate, setExistDate] = useState("");
   
   const  handleLogin = async(e) => {
+    
+    setLoaderSubmit(false);
     e.preventDefault();
 
     if(email && password) {
+      
       await axios({
         method: "POST",
         headers: {'X-Custom-Header': 'foobar'},
@@ -28,7 +31,10 @@ const Login = ({ user, setUser }) => {
         localStorage.setItem('data', JSON.stringify(res.data));
         localStorage.setItem('token', JSON.stringify(res.token));
         console.log('res : ', res.data);
-        navigate("./chat");
+        setTimeout(() => {
+          setLoaderSubmit(true);
+          navigate("./chat");
+        },4000);
       }).catch((err) => {
           const axiosError = err;
           const response = axiosError.response;
@@ -71,9 +77,16 @@ const Login = ({ user, setUser }) => {
                 name="password"
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Se connecter
-            </Button>
+            {
+              loaderSubmit ? 
+                <Button variant="primary" type="submit">
+                  Se connecter
+                </Button> : 
+                <Button variant="primary" type="submit">
+                 Connection...
+                </Button>
+            }
+            
             <div className="py-4">
               <p className="text-center">
                 As-tu deja un compte ? <Link to="/signup">Login</Link>
