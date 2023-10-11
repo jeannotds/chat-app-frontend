@@ -17,7 +17,7 @@ const Message = ({ own, message, currentUser, loadMessage }) => {
           </div> : <div className="loardMessage"></div>
         }
       
-      </div> : "Loading"}
+      </div> : <div className="loadUser"></div>}
      
     </div>
   );

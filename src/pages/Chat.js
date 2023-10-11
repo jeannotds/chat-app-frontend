@@ -76,7 +76,9 @@ const Chat = ({user}) => {
     axios.get(`http://localhost:8001/api/message/${chat?._id}`)
     .then((res) => {
       setMessages(res.data.messages);
-      setLoadMessage(true);
+      setTimeout(() => {
+        setLoadMessage(true);
+      },4000);
     })
     .catch((err) => {
       throw err;
