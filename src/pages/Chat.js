@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import profil from "../images/Jeannot.jpeg";
 import Message from "../components/Message";
 import axios from "axios";
 import Conversation from "../components/Conversation";
@@ -10,6 +9,7 @@ import InputEmoji from "react-input-emoji";
 import "../styles/emojiinput.css";
 
 import { io } from 'socket.io-client';
+import SidebarProfil from "../components/SidebarProfil";
 
 const Chat = ({user}) => {
 
@@ -31,7 +31,7 @@ const Chat = ({user}) => {
 
 
   useEffect(() => { 
-    socket.current = io("http://localhost:8800");
+    socket.current = io("http://localhost:8801");
 
     socket.current.on("getMessage", data => {
       setArriveMessage({
@@ -122,14 +122,7 @@ const Chat = ({user}) => {
     <div className="chat">
       <div className="sidebar">
         <div className="content-sidebar">
-          <div className="small-sidebar">
-            <img
-              src={profil}
-              alt="profil"
-              title="profil"
-              className="my_profil"
-            />
-          </div>
+          <SidebarProfil  />
           <div className="recent">
             <input type="text" placeholder="Search" className="search" />
             <h4>Recent</h4>
