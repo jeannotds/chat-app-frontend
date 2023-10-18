@@ -2,174 +2,186 @@ import React, { useRef } from "react";
 import Profil from "../images/Jeannot.jpeg";
 
 function Stories() {
-    const containerRef = useRef(null);
 
+    const scrollLeft = () => {
+        const slider = document.getElementById('slider');
+        slider.scrollLeft = slider.scrollLeft  - 82; // Adjust the scroll distance as needed
+    };
+    
     const scrollRight = () => {
-        containerRef.current.scrollLeft += 200; // Adjust the scroll distance as needed
+        const slider = document.getElementById('slider');
+        slider.scrollLeft = slider.scrollLeft  + 86;  // Adjust the scroll distance as needed
       };
     
-      const scrollLeft = () => {
-        containerRef.current.scrollLeft -= 200; // Adjust the scroll distance as needed
-      };
 
   return (
     <>
       <div className="flex overflow-x-hidden">
         <div className="flex" >
-          <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-        </div>
-        <div className="flex" ref={containerRef}>
-          {/* Your img elements */}
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
+          
+          <div className="relative flex items-center" >
+
+            <div id="slider" className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth ">
+               
+                <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                 <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                 <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                 <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                 <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                  <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                 <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                 <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                 <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                 <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                 <img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+
+<img
+                    src={Profil}
+                    alt="profil"
+                    title=""
+                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                />
+                
+                
+                
+                
+            </div>
+
           </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          <div className="border-4 border-indigo-500/100 w-[65px] h-[65px] rounded-full relative flex-1 m-1">
-            <img
-              src={Profil}
-              alt="profil"
-              title=""
-              className="w-[51px] h-[51px] absolute left-[0.22rem] rigth-[0.25rem]  top-[0.2rem] rounded-full"
-            />
-          </div>
-          {/* Rest of the img elements */}
+          
         </div>
       </div>
       <div className="flex justify-center mt-2">
