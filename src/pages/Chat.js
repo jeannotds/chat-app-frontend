@@ -10,6 +10,8 @@ import "../styles/emojiinput.css";
 
 import { io } from 'socket.io-client';
 import SidebarProfil from "../components/SidebarProfil";
+import Search from "../components/Search";
+import Stories from "../components/Stories";
 
 const Chat = ({user}) => {
 
@@ -124,8 +126,11 @@ const Chat = ({user}) => {
         <div className="content-sidebar">
           <SidebarProfil  />
           <div className="recent">
-            <input type="text" placeholder="Search" className="search" />
-            <h4>Recent</h4>
+            <Search />
+            <div>
+              <Stories />
+            </div>
+            <h6>Recent</h6>
               <div className="recent-down">
                   {
                     userChats?.chat?.map((chat) => (
