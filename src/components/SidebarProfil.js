@@ -9,69 +9,38 @@ function SidebarProfil() {
         beni: ["images.jpg"],
     };
     // const userImage = ["images.jpg"];
-    let val = 2;
-
-    const borderImage = {
-        backgroundImage: 'linear-gradient(to right, red 50%, blue 50%)',
-        borderImageSlice: '1',
-        borderImageRepeat: 'round',
-      };
+    let val = 3;
 
   return (
-
-    <div className="status-container">
-      <div className="status">
-        <div className="status-icon">
-          <img src={profil} style={{width: "60px" , borderRadius: "100%"}} alt="status icon" />
-        </div>
-        <div className="status-info">
-          <h4 className="status-title">John Doe</h4>
-          <p className="status-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </div>
-      </div>
-    </div>
-  
         
-//     <div className="small-sidebar">
-//             <img
-//                 src={profil}
-//                 alt="profil"
-//                 title="profil"
+    <div className="small-sidebar" style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        color: "white",
+        fontWeight: "bold",
+        fontSize: "12px",
+    }}>
+        <p>Jeannot Diambu</p>
+            <div>
+            <img
+                src={profil}
+                alt="profil"
+                title="profil"
 
-//                 style={{
-//                     width: '100px',
-//                     ...borderImage,
-//                     // border: userImage.jack.length > 1 ? `${val}px solid red` : `${val * userImage.jack.length}px solid yellow`,
-//                     textAlign: 'center',
-//                     margin: `1px auto`,
-//                     borderRadius: "100%",
-//                   }}
-//             />
-
-//             {/* <img
-//                 src={profil}
-//                 alt="profil"
-//                 title="profil"
-//                 style={userImage.beni.length > 1 ? 
-//                     {   
-//                         width: '100px',
-//                         border: `${val}px solid red`,
-//                         textAlign: 'center',
-//                         margin: `1px auto`,
-//                         borderRadius: "100%"
-//                     } : {
-//                         width: '100px',
-//                         border: `${val}px solid yellow`,
-//                         textAlign: 'center',
-//                         margin: `1px auto`,
-//                         borderRadius: "100%",
-//                     }
-//                 }
-//             /> */}
-//        </div>
-
-
-  )
+                style={{
+                    width: '100px',
+                    border: userImage.jack.length > 1 ? `${val}px solid red` : `${val * userImage.jack.length}px solid yellow`,
+                    textAlign: 'center',
+                    borderColor: "white",
+                    margin: `0 auto`,
+                    borderRadius: "100%",
+                  }}
+            />
+            </div>
+       </div>
+  );
 }
 
 export default SidebarProfil;
