@@ -15,11 +15,15 @@ function Stories() {
     
     const scrollRight = () => {
         containerRef.current.scrollLeft -= 171;
+    };
+
+    const handleDoubleClick = (event) => {
+        event.preventDefault();
       };
     
   return (
     <>
-      <div className="flex overflow-x-hidden relative z-10">
+      <div onClick={handleDoubleClick} className="flex overflow-x-hidden relative z-10 dasableImage">
         <div className="flex" >
           <div onClick={scrollLeft} className="text-[20px] absolute top-6 left-0 z-20 bg-[#ffffff] p-2 rounded-full hover:bg-[#dfd9d9] transition ease-in-out delay-150 cursor-pointer">
             <FaArrowLeft  />

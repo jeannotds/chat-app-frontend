@@ -11,10 +11,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+
+/*disable select Images*/
+.dasableImage {
+    user-select: none; /* Standard */
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
 
 
 .login__bg{
