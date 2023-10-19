@@ -1,202 +1,47 @@
-import React, { useRef } from "react";
-import Profil from "../images/Jeannot.jpeg";
+import { useRef } from "react";
+import { data } from "../helper/data/story";
+import { FaArrowRight } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
+
 
 function Stories() {
 
+    const containerRef = useRef(null);
+
+
     const scrollLeft = () => {
-        const slider = document.getElementById('slider');
-        slider.scrollLeft = slider.scrollLeft  - 82; // Adjust the scroll distance as needed
+        containerRef.current.scrollLeft += 171;
     };
     
     const scrollRight = () => {
-        const slider = document.getElementById('slider');
-        slider.scrollLeft = slider.scrollLeft  + 86;  // Adjust the scroll distance as needed
+        containerRef.current.scrollLeft -= 171;
       };
     
-
   return (
     <>
-      <div className="flex overflow-x-hidden">
+      <div className="flex overflow-x-hidden relative z-10">
         <div className="flex" >
-          
-          <div className="relative flex items-center" >
-
-            <div id="slider" className="w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth ">
-               
-                <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                 <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                 <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                 <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                 <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                  <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                 <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                 <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                 <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                 <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                 <img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-
-<img
-                    src={Profil}
-                    alt="profil"
-                    title=""
-                    className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
-                />
-                
-                
-                
-                
-            </div>
-
+          <div onClick={scrollLeft} className="text-[20px] absolute top-6 left-0 z-20 bg-[#ffffff] p-2 rounded-full hover:bg-[#dfd9d9] transition ease-in-out delay-150 cursor-pointer">
+            <FaArrowLeft  />
           </div>
-          
+          <div className="relative flex items-center z-10" >
+            <div id="slider" ref={containerRef} className="w-full justify-between h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth ">
+               {
+                data.map((item, index) => (
+                    <img key={index}
+                        src={item.image}
+                        alt="profil"
+                        title=""
+                        className="rounded-[100%] border-solid border-2 border-indigo-600 w-[70px] h-[70px] inline-block  m-2 cursor-pointer hover:scale-105 ease-in-out duration-300"
+                    />
+                ))
+               }
+            </div>
+          </div>
+          <div onClick={scrollRight} className="text-[20px] absolute top-6 right-0 z-20 bg-[#ffffff] p-2 rounded-full hover:bg-[#dfd9d9] transition ease-in-out delay-150 cursor-pointer">
+            <FaArrowRight />
+          </div>
         </div>
-      </div>
-      <div className="flex justify-center mt-2">
-        <button
-          className="px-2 py-1 text-sm bg-blue-500 text-white rounded-md mr-2"
-          onClick={scrollLeft}
-        >
-          Scroll Left
-        </button>
-        <button
-          className="px-2 py-1 text-sm bg-blue-500 text-white rounded-md"
-          onClick={scrollRight}
-        >
-          Scroll Right
-        </button>
       </div>
       <hr className="opacity-1" />
       
